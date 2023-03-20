@@ -24,13 +24,24 @@ include_directories(${GTK3_INCLUDE_DIRS})
 link_directories(${GTK3_LIBRARY_DIRS})
 
 #子目录
+include_directories(${PROJECT_SOURCE_DIR}/base_toolkit)
+add_subdirectory(base_toolkit)
+aux_source_directory(./base_toolkit MANAGER_SRCS)
+
 include_directories(${PROJECT_SOURCE_DIR}/ml)
 add_subdirectory(ml)
 aux_source_directory(./ml ML_SRCS)
 
+include_directories(${PROJECT_SOURCE_DIR}/manager)
+add_subdirectory(manager)
+aux_source_directory(./manager MANAGER_SRCS)
+
+#创建可执行文件并链接库
 add_executable(A660_C_Homework
         main.c
-        ${ML_SRCS})
+        ${ML_SRCS}
+        ${MANAGER_SRCS}
+        )
 target_link_libraries(A660_C_Homework
         ${OpenCV_LIBS}
         openvino::runtime
