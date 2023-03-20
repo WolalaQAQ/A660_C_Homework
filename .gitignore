@@ -1,0 +1,6 @@
+# 项目排除路径
+/cmake-build-debug-visual-studio/
+.idea
+.vs
+/out
+/lib
