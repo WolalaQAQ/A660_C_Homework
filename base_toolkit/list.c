@@ -1,7 +1,20 @@
 //
-// Created by Adminstrator on 2023/3/21.
+// Created by wolala on 2023/3/21.
 //
 #include "list.h"
+
+/**
+ * @brief 双向链表,实现了链表的基本操作
+ * @author wolala
+ * @date 2023/3/21
+ * @version 1.0
+ */
+
+/**
+ * 创建一个节点
+ * @param data 节点数据
+ * @return 节点
+ */
 
 ListNode* createListNode(void* data) {
     ListNode* node = (ListNode*) malloc(sizeof(ListNode));
@@ -11,12 +24,23 @@ ListNode* createListNode(void* data) {
     return node;
 }
 
+/**
+ * 初始化一个链表
+ * @return 链表头节点
+ */
+
 ListNode* initList() {
     ListNode* head = createListNode(NULL);
     head->next = head;
     head->prev = head;
     return head;
 }
+
+/**
+ * 将节点插入到链表尾部
+ * @param head 链表头节点
+ * @param data 节点数据
+ */
 
 void nodePushBack(ListNode* head, void* data) {
     ListNode* node = createListNode(data);
@@ -26,6 +50,12 @@ void nodePushBack(ListNode* head, void* data) {
     head->prev = node;
 }
 
+/**
+ * 将节点插入到链表头部
+ * @param head 链表头节点
+ * @param data 节点数据
+ */
+
 void nodePushFront(ListNode* head, void* data) {
     ListNode* node = createListNode(data);
     node->next = head->next;
@@ -33,6 +63,13 @@ void nodePushFront(ListNode* head, void* data) {
     head->next->prev = node;
     head->next = node;
 }
+
+/**
+ * 将节点插入到链表中间
+ * @param head 链表头节点
+ * @param data 节点数据
+ * @param index 节点位置
+ */
 
 void nodeInsert(ListNode* head, void* data, int index) {
     ListNode* node = createListNode(data);
@@ -51,6 +88,12 @@ void nodeInsert(ListNode* head, void* data, int index) {
     }
 }
 
+/**
+ * 删除链表中的节点
+ * @param head 链表头节点
+ * @param index 节点位置
+ */
+
 void nodeDelete(ListNode* head, int index) {
     ListNode* p = head->next;
     int i = 0;
@@ -66,6 +109,11 @@ void nodeDelete(ListNode* head, int index) {
     }
 }
 
+/**
+ * 链表清空
+ * @param head 链表头节点
+ */
+
 void nodeClear(ListNode* head) {
     ListNode* p = head->next;
     while (p != head) {
@@ -76,6 +124,11 @@ void nodeClear(ListNode* head) {
     head->next = head;
     head->prev = head;
 }
+
+/**
+ * 链表反转
+ * @param head 链表头节点
+ */
 
 void nodeReverse(ListNode* head) {
     ListNode* p = head->next;
@@ -89,6 +142,12 @@ void nodeReverse(ListNode* head) {
     head->next = head->prev;
     head->prev = temp;
 }
+
+/**
+ * 链表排序
+ * @param head 链表头节点
+ * @param compare 比较函数
+ */
 
 void nodeSort(ListNode* head, int (*compare)(void*, void*)) {
     ListNode* p = head->next;
@@ -106,6 +165,13 @@ void nodeSort(ListNode* head, int (*compare)(void*, void*)) {
     }
 }
 
+/**
+ * 查找链表中是否存在某个节点
+ * @param head 链表头节点
+ * @param data 节点数据
+ * @return 是否存在
+ */
+
 bool nodeFind(ListNode* head, void* data) {
     ListNode* p = head->next;
     while (p != head) {
@@ -116,6 +182,12 @@ bool nodeFind(ListNode* head, void* data) {
     }
     return false;
 }
+
+/**
+ * 获取链表中节点的个数
+ * @param head 链表头节点
+ * @return 节点个数
+ */
 
 int nodeSize(ListNode* head) {
     ListNode* p = head->next;
