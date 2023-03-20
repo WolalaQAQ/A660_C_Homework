@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.24)
+cmake_minimum_required(VERSION 3.10)
 project(A660_C_Homework C)
 
 set(CMAKE_C_STANDARD 23)
