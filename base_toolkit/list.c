@@ -1,7 +1,6 @@
 //
 // Created by wolala on 2023/3/21.
 //
-#include "list.h"
 
 /**
  * @brief 双向链表,实现了链表的基本操作
@@ -9,6 +8,8 @@
  * @date 2023/3/21
  * @version 1.0
  */
+
+#include "list.h"
 
 /**
  * 创建一个节点
