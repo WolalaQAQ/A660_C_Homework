@@ -5,4 +5,11 @@
 #ifndef A660_C_HOMEWORK_USERS_H
 #define A660_C_HOMEWORK_USERS_H
 
+struct User {
+  int identity;
+  char name[20];
+  char password[20];
+  float balance;
+};
+
 #endif  // A660_C_HOMEWORK_USERS_H

@@ -185,6 +185,24 @@ bool nodeFind(ListNode* head, void* data) {
 }
 
 /**
+ * 查找存储对应数据的链表节点
+ * @param head
+ * @param data
+ * @return
+ */
+
+ListNode* nodeFindNode(ListNode* head, void* data) {
+    ListNode* p = head->next;
+    while (p != head) {
+        if (p->data == data) {
+            return p;
+        }
+        p = p->next;
+    }
+    return NULL;
+}
+
+/**
  * 获取链表中节点的个数
  * @param head 链表头节点
  * @return 节点个数

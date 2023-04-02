@@ -25,6 +25,7 @@ void nodeClear(ListNode* head);
 void nodeReverse(ListNode* head);
 void nodeSort(ListNode* head, int (*compare)(void*, void*));
 bool nodeFind(ListNode* head, void* data);
+ListNode* nodeSearch(ListNode* head, void* data);
 int nodeSize(ListNode* head);
 
 #endif  // A660_C_HOMEWORK_LIST_H

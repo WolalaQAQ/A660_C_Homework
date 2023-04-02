@@ -5,4 +5,5 @@
 #ifndef A660_C_HOMEWORK_STORE_H
 #define A660_C_HOMEWORK_STORE_H
 
+
 #endif  // A660_C_HOMEWORK_STORE_H
