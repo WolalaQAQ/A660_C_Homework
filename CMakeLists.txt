@@ -5,18 +5,23 @@ SET(EXECUTABLE_OUTPUT_PATH "${PROJECT_BINARY_DIR}/bin/")
 SET(LIBRARY_OUTPUT_PATH "${PROJECT_BINARY_DIR}/lib/")
 link_directories(${PROJECT_BINARY_DIR}/lib/)
 
-find_package(PkgConfig REQUIRED)
+if(WIN32)
+        set(PKG_CONFIG_EXECUTABLE ${PROJECT_SOURCE_DIR}/lib/gtk/bin/pkg-config.exe)
+        set(GTK3_DIR ${PROJECT_SOURCE_DIR}/lib/gtk)
+        set(OpenCV_DIR ${PROJECT_SOURCE_DIR}/lib/OpenCV)
+        set(OpenVINO_DIR ${PROJECT_SOURCE_DIR}/lib/OpenVINO/runtime/cmake)
+endif ()
+
 #OpenCV
-set(OpenCV_DIR ${PROJECT_SOURCE_DIR}/lib/OpenCV)
 find_package(OpenCV REQUIRED)
 include_directories(${OpenCV_INCLUDE_DIR})
 
 #OpenVINO 2022.3
-set(OpenVINO_DIR ${PROJECT_SOURCE_DIR}/lib/OpenVINO/runtime/cmake)
 find_package(OpenVINO REQUIRED)
 include_directories(${OpenVINO_INCLUDE_DIR})
 
 #GTK3
+find_package(PkgConfig REQUIRED)
 pkg_check_modules(GTK3 REQUIRED gtk+-3.0)
 include_directories(${GTK3_INCLUDE_DIRS})
 link_directories(${GTK3_LIBRARY_DIRS})
@@ -38,7 +43,7 @@ set_source_files_properties(
         main.c
         ${ML_SRCS}
         PROPERTIES LANGUAGE CXX
-        )
+)
 
 #创建可执行文件并链接库
 add_executable(A660_C_Homework

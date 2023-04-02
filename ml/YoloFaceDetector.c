@@ -30,14 +30,6 @@ void parseYolo() {
     // Fill first data ...
   }
 
-  {
-    // Get input tensor by tensor name
-    ov_infer_request_get_tensor(infer_request, "data2_t", &input_tensor2);
-    // Element types, names and layouts are aligned with framework
-    ov_tensor_data(input_tensor2, &data);
-    // Fill first data ...
-  }
-
   ov_tensor_free(input_tensor1);
   ov_tensor_free(input_tensor2);
   ov_infer_request_infer(infer_request);

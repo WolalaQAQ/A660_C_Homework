@@ -3,13 +3,6 @@
 //
 #include "vector.h"
 
-typedef struct {
-  void* data;
-  size_t size;
-  size_t capacity;
-  size_t element_size;
-} Vector;
-
 Vector* vector_create(size_t initial_capacity, size_t element_size) {
   Vector* vec = (Vector*)malloc(sizeof(Vector));
   vec->data = malloc(initial_capacity * element_size);
