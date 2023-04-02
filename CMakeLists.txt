@@ -5,18 +5,18 @@ SET(EXECUTABLE_OUTPUT_PATH "${PROJECT_BINARY_DIR}/bin/")
 SET(LIBRARY_OUTPUT_PATH "${PROJECT_BINARY_DIR}/lib/")
 link_directories(${PROJECT_BINARY_DIR}/lib/)
 
+find_package(PkgConfig REQUIRED)
 #OpenCV
-set(OpenCV_DIR ${PROJECT_SOURCE_DIR}/lib/OpenCV-MSVC)
+set(OpenCV_DIR ${PROJECT_SOURCE_DIR}/lib/OpenCV)
 find_package(OpenCV REQUIRED)
 include_directories(${OpenCV_INCLUDE_DIR})
 
 #OpenVINO 2022.3
-#set(OpenVINO_DIR ${PROJECT_SOURCE_DIR}/lib/OpenVINO/runtime/cmake)
-#find_package(OpenVINO REQUIRED)
-#include_directories(${OpenVINO_INCLUDE_DIR})
+set(OpenVINO_DIR ${PROJECT_SOURCE_DIR}/lib/OpenVINO/runtime/cmake)
+find_package(OpenVINO REQUIRED)
+include_directories(${OpenVINO_INCLUDE_DIR})
 
 #GTK3
-find_package(PkgConfig REQUIRED)
 pkg_check_modules(GTK3 REQUIRED gtk+-3.0)
 include_directories(${GTK3_INCLUDE_DIRS})
 link_directories(${GTK3_LIBRARY_DIRS})
@@ -49,6 +49,6 @@ add_executable(A660_C_Homework
         )
 target_link_libraries(A660_C_Homework
         ${OpenCV_LIBS}
-#        openvino::runtime
+        openvino::runtime
         ${GTK3_LIBRARIES}
         )
