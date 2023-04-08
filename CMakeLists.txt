@@ -4,6 +4,7 @@ project(A660_C_Homework C CXX)
 SET(EXECUTABLE_OUTPUT_PATH "${PROJECT_BINARY_DIR}/bin/")
 file(MAKE_DIRECTORY ${EXECUTABLE_OUTPUT_PATH}/data)
 file(MAKE_DIRECTORY ${EXECUTABLE_OUTPUT_PATH}/image_audio)
+file(MAKE_DIRECTORY ${EXECUTABLE_OUTPUT_PATH}/css)
 
 if(WIN32)
         set(PKG_CONFIG_EXECUTABLE ${PROJECT_SOURCE_DIR}/lib/gtk/bin/pkg-config.exe)
@@ -65,3 +66,7 @@ add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory
         ${PROJECT_SOURCE_DIR}/image_audio
         ${EXECUTABLE_OUTPUT_PATH}/image_audio)
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${PROJECT_SOURCE_DIR}/css
+        ${EXECUTABLE_OUTPUT_PATH}/css)

@@ -33,6 +33,7 @@ void writeMovieFile(struct Movie* movie) {
   fprintf(file, "%s %d %s %s %s %s %s %f", movie->name, movie->year,
           movie->director, movie->actor, movie->country, movie->language,
           movie->introduction, movie->score);
+  fclose(file);
 }
 
 Node* getMovieList(FILE* movie_file) {
@@ -89,6 +90,7 @@ void writeMovieTimesFile(struct MovieTimes* movie_times) {
           movie_times->time, movie_times->cinema, movie_times->price, movie_times->seat_remain,
           movie_times->movie->name, movie_times->movie->year, movie_times->movie->director, movie_times->movie->actor,
           movie_times->movie->country, movie_times->movie->language, movie_times->movie->introduction, movie_times->movie->score);
+  fclose(file);
 }
 
 Node* getMovieTimesList(FILE* movie_times_file) {
@@ -164,6 +166,7 @@ void writeTicketFile(struct Ticket* ticket) {
           ticket->movie_times->price, ticket->movie_times->movie->name, ticket->movie_times->movie->year,
           ticket->movie_times->movie->director, ticket->movie_times->movie->actor, ticket->movie_times->movie->country,
           ticket->movie_times->movie->language, ticket->movie_times->movie->introduction, ticket->movie_times->movie->score);
+  fclose(file);
 }
 
 Node* getTicketList(FILE* ticket_file) {

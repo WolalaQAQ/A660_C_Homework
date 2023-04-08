@@ -17,17 +17,18 @@ FILE* readUserFile() {
 }
 
 void writeUserFile(struct User* user) {
-  FILE* file = fopen("./data/user.txt", "a+");
+  FILE* file = fopen("./data/user.txt", "a");
   if (file == NULL) {
     printf("Error opening file!\n");
     exit(1);
   }
-  fprintf(file, "%d %s %s %f", user->identity, user->name, user->password, user->balance);
+  fprintf(file, "%d %s %s %f\n", user->identity, user->name, user->password, user->balance);
+  fclose(file);
 }
 
 Node* getUserList(FILE* user_file) {
   Node* head = NULL;
-  enum identity identity;
+  enum Identity identity;
   char name[20];
   char password[20];
   float balance;
@@ -42,7 +43,7 @@ Node* getUserList(FILE* user_file) {
   return head;
 }
 
-void printUserList(Node* head, enum identity identity) {
+void printUserList(Node* head, enum Identity identity) {
   Node* current = head;
   while (current != NULL) {
     struct User* user = (struct User*)current->data;
@@ -54,4 +55,23 @@ void printUserList(Node* head, enum identity identity) {
            user->balance);
     current = current->next;
   }
+}
+
+int findUserNode(Node* head, struct User* user, enum VerifyMode mode) {
+  Node* current = head;
+  while (current != NULL) {
+    struct User* current_user = (struct User*)current->data;
+    if(mode == VERIFY_MODE_LOGIN) {
+      if (strcmp(current_user->name, user->name) == 0 &&
+          strcmp(current_user->password, user->password) == 0) {
+        return 1;
+      }
+    } else if(mode == VERIFY_MODE_REGISTER) {
+      if (strcmp(current_user->name, user->name) == 0) {
+        return 1;
+      }
+    }
+    current = current->next;
+  }
+  return 0;
 }

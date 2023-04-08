@@ -1,0 +1,18 @@
+/* 设置表格边框样式 */
+.grid-frame {
+    border-style: solid;
+    border-width: 1px;
+    border-color: #cccccc;
+    padding: 5px;
+}
+
+/* 设置表头样式 */
+.grid-header {
+    background-color: #f0f0f0;
+    font-weight: bold;
+}
+
+/* 设置单元格样式 */
+.grid-cell {
+    padding: 5px;
+}

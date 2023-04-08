@@ -8,8 +8,8 @@
 #include "movie.h"
 #include "users.h"
 
-void on_button_clicked_movie_button1(GtkWidget* button, gpointer data);
-void on_button_clicked_movie_button2(GtkWidget* button, gpointer data);
+void on_button_clicked_movie_manager(GtkWidget* button, gpointer data);
+void on_button_clicked_movie_times_manager(GtkWidget* button, gpointer data);
 void on_button_clicked_guest_button1(GtkWidget* button, gpointer data);
 void on_button_clicked_guest_button2(GtkWidget* button, gpointer data);
 void on_button_clicked_sell_button1(GtkWidget* button, gpointer data);

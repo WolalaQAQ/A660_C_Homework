@@ -90,7 +90,6 @@ void deleteNode(struct Node** headRef, void* data) {
     free(deletedNode);
   }
 }
-
 // 获取链表的长度
 int length(struct Node* head) {
   int len = 0;
