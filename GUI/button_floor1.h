@@ -5,9 +5,5 @@
 #include "button_floor2.h"
 #include "button_floor3.h"
 
-void on_button_clicked_movie(GtkWidget *button, gpointer data);
-void on_button_clicked_guest(GtkWidget *button, gpointer data);
-void on_button_clicked_sell(GtkWidget *button, gpointer data);
-void Administor();
 
 #endif //BUTTON_FLOOR1_C

@@ -4,13 +4,13 @@ void Gmain(int argc, char *argv[]) {
   gtk_init(&argc, &argv);
 
   // 创建一个新窗口
-  GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-  gtk_window_set_title(GTK_WINDOW(window), "登录&注册");
-  gtk_window_set_default_size(GTK_WINDOW(window), 769, 615);
+  GtkWidget *window_pass = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+  gtk_window_set_title(GTK_WINDOW(window_pass), "登录&注册");
+  gtk_window_set_default_size(GTK_WINDOW(window_pass), 769, 615);
 
   // 创建一个布局容器
   GtkWidget *layout = gtk_layout_new(NULL, NULL);
-  gtk_container_add(GTK_CONTAINER(window), layout);
+  gtk_container_add(GTK_CONTAINER(window_pass), layout);
 
   // 加载图片
   GtkWidget *image =
@@ -54,6 +54,6 @@ void Gmain(int argc, char *argv[]) {
                    "background3.png");
 
   // 显示窗口和所有控件
-  gtk_widget_show_all(window);
+  gtk_widget_show_all(window_pass);
   gtk_main();
 }

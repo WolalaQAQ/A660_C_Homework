@@ -13,4 +13,10 @@ void on_button_clicked_login();
 void on_button_clicked_register_();
 void on_button_clicked_register();
 
+
+void on_button_clicked_movie(GtkWidget *button, gpointer data);
+void on_button_clicked_guest(GtkWidget *button, gpointer data);
+void on_button_clicked_sell(GtkWidget *button, gpointer data);
+void Administor(GtkWidget *button, gpointer data);
+
 #endif  // GUI_DEFAULT_C
