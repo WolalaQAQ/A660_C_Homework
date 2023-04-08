@@ -39,6 +39,10 @@ include_directories(${PROJECT_SOURCE_DIR}/manager)
 add_subdirectory(manager)
 aux_source_directory(./manager MANAGER_SRCS)
 
+include_directories(${PROJECT_SOURCE_DIR}/GUI)
+add_subdirectory(GUI)
+aux_source_directory(./GUI GUI_SRCS)
+
 set_source_files_properties(
         main.c
         ${ML_SRCS}
@@ -49,8 +53,9 @@ set_source_files_properties(
 add_executable(A660_C_Homework
         main.c
         ${BASE_TOOLKIT_SRCS}
-        ${ML_SRCS}
+        # ${ML_SRCS}
         ${MANAGER_SRCS}
+        ${GUI_SRCS}
         )
 target_link_libraries(A660_C_Homework
         ${OpenCV_LIBS}
