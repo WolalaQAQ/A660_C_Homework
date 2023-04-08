@@ -58,23 +58,77 @@ void on_button_clicked_login() {
 }
 //打开注册输入界面
 void on_button_clicked_register() {
-  // 创建一个新窗口
+  // 创建一个新窗口和布局容器
   GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-  gtk_window_set_title(GTK_WINDOW(window), "影院管理系统");
-  gtk_window_set_default_size(GTK_WINDOW(window), 900, 600);
-  // 创建一个布局容器
+  gtk_window_set_title(GTK_WINDOW(window), "注册");
+  gtk_window_set_default_size(GTK_WINDOW(window), 350, 300);
   GtkWidget *layout = gtk_layout_new(NULL, NULL);
+
   gtk_container_add(GTK_CONTAINER(window), layout);
 
-  // 加载图片
-  GtkWidget *image =
-      gtk_image_new_from_file("C:\\Users\\wangziyi\\Desktop\\GUI\\bk1.jpg");
+  // 创建下拉菜单
+  GtkWidget *combo_box = gtk_combo_box_text_new();
+  gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(combo_box), "0", "顾客");
+  gtk_combo_box_text_append(GTK_COMBO_BOX_TEXT(combo_box), "1", "管理员");
+  gtk_layout_put(GTK_LAYOUT(layout), combo_box, 50, 50);
 
-  // 将图片添加到布局容器中
-  gtk_layout_put(GTK_LAYOUT(layout), image, 0, 0);
+  // 创建用户名文本框
+  GtkWidget *username_label = gtk_label_new("用户名：");
+  gtk_layout_put(GTK_LAYOUT(layout), username_label, 50, 100);
+  GtkWidget *username_entry = gtk_entry_new();
+  gtk_layout_put(GTK_LAYOUT(layout), username_entry, 120, 100);
+
+  // 创建密码文本框
+  GtkWidget *password_label = gtk_label_new("密码：");
+  gtk_layout_put(GTK_LAYOUT(layout), password_label, 50, 150);
+  GtkWidget *password_entry = gtk_entry_new();
+  gtk_entry_set_visibility(GTK_ENTRY(password_entry), FALSE);
+  gtk_layout_put(GTK_LAYOUT(layout), password_entry, 120, 150);
+
+  // 创建确认按钮
+  GtkWidget *confirm_button = gtk_button_new_with_label("确认");
+  gtk_layout_put(GTK_LAYOUT(layout), confirm_button, 170, 220);
+
+  // 将每个控件分配给变量
+  GtkComboBox *combo_box_widget = GTK_COMBO_BOX(combo_box);
+  GtkEntry *username_entry_widget = GTK_ENTRY(username_entry);
+  GtkEntry *password_entry_widget = GTK_ENTRY(password_entry);
+
+  // 创建 RegistrationData 结构体并将其传递给回调函数
+  RegistrationData *data = g_new(RegistrationData, 1);
+  data->combo_box = combo_box_widget;
+  data->username_entry = username_entry_widget;
+  data->password_entry = password_entry_widget;
+
+  // 连接确认按钮的回调函数
+  g_signal_connect(G_OBJECT(confirm_button), "clicked",
+                   G_CALLBACK(on_button_clicked_register_confirm), data);
 
   // 显示窗口和所有控件
   gtk_widget_show_all(window);
+}
+
+void on_button_clicked_register_confirm(GtkWidget *button, RegistrationData *data) {
+  // 获取下拉菜单选项
+  gint active_index = gtk_combo_box_get_active(data->combo_box);
+  const gchar *active_text = gtk_combo_box_text_get_active_text(GTK_COMBO_BOX_TEXT(data->combo_box));
+  int user_type = -1;
+  if (strcmp(active_text, "管理员") == 0) {
+    user_type = 1;
+  } else if (strcmp(active_text, "顾客") == 0) {
+    user_type = 0;
+  }
+  // 获取用户名和密码文本框内容
+  const gchar *username_text = gtk_entry_get_text(data->username_entry);
+  const gchar *password_text = gtk_entry_get_text(data->password_entry);
+
+  // 打印用户信息
+  g_print("用户类型：%s\n", active_text);
+  g_print("用户名：%s\n", username_text);
+  g_print("密码：%s\n", password_text);
+
+  // 释放 RegistrationData 结构体所占用的内存
+  g_free(data);
 }
 
 void on_button_clicked_movie(GtkWidget *button, gpointer data) {
