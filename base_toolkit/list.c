@@ -1,219 +1,113 @@
-//
-// Created by wolala on 2023/3/21.
-//
-
-/**
- * @brief 双向链表,实现了链表的基本操作
- * @author wolala
- * @date 2023/3/21
- * @version 1.0
- */
-
 #include "list.h"
 
-/**
- * 创建一个节点
- * @param data 节点数据
- * @return 节点
- */
 
-ListNode* createListNode(void* data) {
-    ListNode* node = (ListNode*) malloc(sizeof(ListNode));
-    node->data = data;
-    node->next = NULL;
-    node->prev = NULL;
-    return node;
+
+// 在链表头插入一个新节点
+void insertAtHead(struct Node** headRef, void* data) {
+  // 创建一个新节点
+  struct Node* newNode = (struct Node*) malloc(sizeof(struct Node));
+  newNode->data = data;
+  newNode->next = *headRef;
+
+  // 将新节点作为链表头
+  *headRef = newNode;
 }
 
-/**
- * 初始化一个链表
- * @return 链表头节点
- */
+// 在链表尾插入一个新节点
+void insertAtTail(struct Node** headRef, void* data) {
+  // 创建一个新节点
+  struct Node* newNode = (struct Node*) malloc(sizeof(struct Node));
+  newNode->data = data;
+  newNode->next = NULL;
 
-ListNode* initList() {
-    ListNode* head = createListNode(NULL);
-    head->next = head;
-    head->prev = head;
-    return head;
+  // 如果链表为空，则将新节点作为链表头
+  if (*headRef == NULL) {
+    *headRef = newNode;
+    return;
+  }
+
+  // 找到链表的最后一个节点
+  struct Node* lastNode = *headRef;
+  while (lastNode->next != NULL) {
+    lastNode = lastNode->next;
+  }
+
+  // 将新节点插入到链表尾部
+  lastNode->next = newNode;
 }
 
-/**
- * 将节点插入到链表尾部
- * @param head 链表头节点
- * @param data 节点数据
- */
+// 在指定位置插入一个新节点
+void insertAtIndex(struct Node** headRef, int index, void* data) {
+  // 创建一个新节点
+  struct Node* newNode = (struct Node*) malloc(sizeof(struct Node));
+  newNode->data = data;
 
-void nodePushBack(ListNode* head, void* data) {
-    ListNode* node = createListNode(data);
-    node->next = head;
-    node->prev = head->prev;
-    head->prev->next = node;
-    head->prev = node;
-}
+  // 如果插入位置为0，则将新节点作为链表头
+  if (index == 0) {
+    newNode->next = *headRef;
+    *headRef = newNode;
+    return;
+  }
 
-/**
- * 将节点插入到链表头部
- * @param head 链表头节点
- * @param data 节点数据
- */
-
-void nodePushFront(ListNode* head, void* data) {
-    ListNode* node = createListNode(data);
-    node->next = head->next;
-    node->prev = head;
-    head->next->prev = node;
-    head->next = node;
-}
-
-/**
- * 将节点插入到链表中间
- * @param head 链表头节点
- * @param data 节点数据
- * @param index 节点位置
- */
-
-void nodeInsert(ListNode* head, void* data, int index) {
-    ListNode* node = createListNode(data);
-    ListNode* p = head->next;
-    int i = 0;
-    while (p != head) {
-        if (i == index) {
-            node->next = p;
-            node->prev = p->prev;
-            p->prev->next = node;
-            p->prev = node;
-            return;
-        }
-        p = p->next;
-        i++;
+  // 找到要插入位置的前一个节点
+  struct Node* prevNode = *headRef;
+  for (int i = 0; i < index - 1; i++) {
+    prevNode = prevNode->next;
+    if (prevNode == NULL) {
+      printf("Error: Index out of range\n");
+      return;
     }
+  }
+
+  // 将新节点插入到指定位置
+  newNode->next = prevNode->next;
+  prevNode->next = newNode;
 }
 
-/**
- * 删除链表中的节点
- * @param head 链表头节点
- * @param index 节点位置
- */
+// 删除链表中第一个出现的指定节点
+void deleteNode(struct Node** headRef, void* data) {
+  // 如果链表为空，则无法删除
+  if (*headRef == NULL) {
+    return;
+  }
 
-void nodeDelete(ListNode* head, int index) {
-    ListNode* p = head->next;
-    int i = 0;
-    while (p != head) {
-        if (i == index) {
-            p->prev->next = p->next;
-            p->next->prev = p->prev;
-            free(p);
-            return;
-        }
-        p = p->next;
-        i++;
-    }
+  // 如果要删除的节点是链表头，则将链表头指向下一个节点
+  if ((*headRef)->data == data) {
+    *headRef = (*headRef)->next;
+    return;
+  }
+
+  // 找到要删除节点的前一个节点
+  struct Node* prevNode = *headRef;
+  while (prevNode->next != NULL && prevNode->next->data != data) {
+    prevNode = prevNode->next;
+  }
+
+  // 如果找到了要删除的节点，则将其从链表中删除
+  if (prevNode->next != NULL) {
+    struct Node* deletedNode = prevNode->next;
+    prevNode->next = deletedNode->next;
+    free(deletedNode);
+  }
 }
 
-/**
- * 链表清空
- * @param head 链表头节点
- */
-
-void nodeClear(ListNode* head) {
-    ListNode* p = head->next;
-    while (p != head) {
-        ListNode* q = p->next;
-        free(p);
-        p = q;
-    }
-    head->next = head;
-    head->prev = head;
+// 获取链表的长度
+int length(struct Node* head) {
+  int len = 0;
+  struct Node* currNode = head;
+  while (currNode != NULL) {
+    len++;
+    currNode = currNode->next;
+  }
+  return len;
 }
 
-/**
- * 链表反转
- * @param head 链表头节点
- */
-
-void nodeReverse(ListNode* head) {
-    ListNode* p = head->next;
-    while (p != head) {
-        ListNode* q = p->next;
-        p->next = p->prev;
-        p->prev = q;
-        p = q;
-    }
-    ListNode* temp = head->next;
-    head->next = head->prev;
-    head->prev = temp;
-}
-
-/**
- * 链表排序
- * @param head 链表头节点
- * @param compare 比较函数
- */
-
-void nodeSort(ListNode* head, int (*compare)(void*, void*)) {
-    ListNode* p = head->next;
-    while (p != head) {
-        ListNode* q = p->next;
-        while (q != head) {
-            if (compare(p->data, q->data) > 0) {
-                void* temp = p->data;
-                p->data = q->data;
-                q->data = temp;
-            }
-            q = q->next;
-        }
-        p = p->next;
-    }
-}
-
-/**
- * 查找链表中是否存在某个节点
- * @param head 链表头节点
- * @param data 节点数据
- * @return 是否存在
- */
-
-bool nodeFind(ListNode* head, void* data) {
-    ListNode* p = head->next;
-    while (p != head) {
-        if (p->data == data) {
-            return true;
-        }
-        p = p->next;
-    }
-    return false;
-}
-
-/**
- * 查找存储对应数据的链表节点
- * @param head
- * @param data
- * @return
- */
-
-ListNode* nodeFindNode(ListNode* head, void* data) {
-    ListNode* p = head->next;
-    while (p != head) {
-        if (p->data == data) {
-            return p;
-        }
-        p = p->next;
-    }
-    return NULL;
-}
-
-/**
- * 获取链表中节点的个数
- * @param head 链表头节点
- * @return 节点个数
- */
-
-int nodeSize(ListNode* head) {
-    ListNode* p = head->next;
-    int size = 0;
-    while (p != head) {
-        size++;
-        p = p->next;
-    }
-    return size;
+// 释放链表中所有节点的内存
+void freeList(struct Node* head) {
+  struct Node* currNode = head;
+  while (currNode != NULL) {
+    struct Node* nextNode = currNode->next;
+    free(currNode);
+    currNode = nextNode;
+  }
 }

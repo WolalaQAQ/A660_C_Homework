@@ -5,6 +5,8 @@
 #include <gtk/gtk.h>
 
 #include "button_floor3.h"
+#include "movie.h"
+#include "users.h"
 
 void on_button_clicked_movie_button1(GtkWidget* button, gpointer data);
 void on_button_clicked_movie_button2(GtkWidget* button, gpointer data);

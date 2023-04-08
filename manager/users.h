@@ -7,15 +7,18 @@
 
 #include "movie.h"
 #include "store.h"
-#include "vector.h"
+#include "list.h"
 
 struct User {
-  int identity;
+  int isAdmin;
   char name[20];
   char password[20];
   float balance;
-  Vector* tickets;
-  Vector* foods;
 };
+
+FILE* readUserFile();
+void writeUserFile(struct User* user);
+Node* getUserList(FILE* user_file);
+void printUserList(Node* head, int identity);
 
 #endif  // A660_C_HOMEWORK_USERS_H

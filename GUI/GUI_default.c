@@ -56,7 +56,7 @@ void on_button_clicked_register() {
   // 创建一个新窗口
   GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
   gtk_window_set_title(GTK_WINDOW(window), "影院管理系统");
-  gtk_window_set_default_size(GTK_WINDOW(window), 900, 1200);
+  gtk_window_set_default_size(GTK_WINDOW(window), 900, 600);
   // 创建一个布局容器
   GtkWidget *layout = gtk_layout_new(NULL, NULL);
   gtk_container_add(GTK_CONTAINER(window), layout);
@@ -217,12 +217,12 @@ void on_button_clicked_sell(GtkWidget *button, gpointer data) {
   gtk_widget_show_all(window);
 }
 
-void Administor()
+void Administor(GtkWidget *button, gpointer data)
 {
   // 创建一个新窗口
   GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
   gtk_window_set_title(GTK_WINDOW(window), "影院管理系统(floor1)");
-  gtk_window_set_default_size(GTK_WINDOW(window), 900, 1200);
+  gtk_window_set_default_size(GTK_WINDOW(window), 900, 600);
 
   // 创建一个布局容器
   GtkWidget *layout = gtk_layout_new(NULL, NULL);

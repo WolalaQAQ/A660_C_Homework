@@ -9,23 +9,17 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-typedef struct ListNode{
-    void* data;
-    struct ListNode* next;
-    struct ListNode* prev;
-}ListNode;
+// 定义单向链表节点的结构体
+typedef struct Node {
+  void* data;           // 节点的值的指针
+  struct Node* next;  // 指向下一个节点的指针
+}Node;
 
-ListNode* createListNode(void* data);
-ListNode* initList();
-void nodePushBack(ListNode* head, void* data);
-void nodePushFront(ListNode* head, void* data);
-void nodeInsert(ListNode* head, void* data, int index);
-void nodeDelete(ListNode* head, int index);
-void nodeClear(ListNode* head);
-void nodeReverse(ListNode* head);
-void nodeSort(ListNode* head, int (*compare)(void*, void*));
-bool nodeFind(ListNode* head, void* data);
-ListNode* nodeSearch(ListNode* head, void* data);
-int nodeSize(ListNode* head);
+void insertAtHead(struct Node** headRef, void* data);
+void insertAtTail(struct Node** headRef, void* data);
+void insertAtIndex(struct Node** headRef, int index, void* data);
+void deleteNode(struct Node** headRef, void* data);
+int length(struct Node* head);
+void freeList(struct Node* head);
 
 #endif  // A660_C_HOMEWORK_LIST_H
