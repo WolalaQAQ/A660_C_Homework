@@ -8,6 +8,8 @@
 #include "button_floor2.h"
 #include "button_floor3.h"
 
+void on_window_close(GtkWidget *widget, gpointer data);
+
 void on_button_clicked_login_text(GtkWidget *widget, gpointer data);
 void on_button_clicked_login();
 void on_button_clicked_register_();

@@ -14,12 +14,12 @@ void on_button_clicked_movie_button2(GtkWidget* button, gpointer data) {
 void on_button_clicked_guest_button1(GtkWidget* button, gpointer data) {
   FILE* current_user_data = readUserFile();
   Node* current_user_node = getUserList(current_user_data);
-  printUserList(current_user_node, 0);
+  printUserList(current_user_node, GUEST);
 }
 void on_button_clicked_guest_button2(GtkWidget* button, gpointer data) {
   FILE* current_user_data = readUserFile();
   Node* current_user_node = getUserList(current_user_data);
-  printUserList(current_user_node, 1);
+  printUserList(current_user_node, ADMIN);
 }
 void on_button_clicked_sell_button1(GtkWidget* button, gpointer data) {
 

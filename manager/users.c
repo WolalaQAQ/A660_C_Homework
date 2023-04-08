@@ -22,18 +22,18 @@ void writeUserFile(struct User* user) {
     printf("Error opening file!\n");
     exit(1);
   }
-  fprintf(file, "%d %s %s %f", user->isAdmin, user->name, user->password, user->balance);
+  fprintf(file, "%d %s %s %f", user->identity, user->name, user->password, user->balance);
 }
 
 Node* getUserList(FILE* user_file) {
   Node* head = NULL;
-  int isAdmin;
+  enum identity identity;
   char name[20];
   char password[20];
   float balance;
-  while (fscanf(user_file, "%d %s %s %f", &isAdmin, name, password, &balance) == 4) {
+  while (fscanf(user_file, "%d %s %s %f", &identity, name, password, &balance) == 4) {
     struct User* user = malloc(sizeof(struct User));
-    user->isAdmin = isAdmin;
+    user->identity = identity;
     strcpy(user->name, name);
     strcpy(user->password, password);
     user->balance = balance;
@@ -42,11 +42,11 @@ Node* getUserList(FILE* user_file) {
   return head;
 }
 
-void printUserList(Node* head, int isAdmin) {
+void printUserList(Node* head, enum identity identity) {
   Node* current = head;
   while (current != NULL) {
     struct User* user = (struct User*)current->data;
-    if(user->isAdmin != isAdmin) {
+    if(user->identity != identity) {
       current = current->next;
       continue;
     }

@@ -5,6 +5,11 @@
 
 gchar *administor_password= "password_default";
 gchar *temp_password ;
+//关闭窗口
+void on_window_close(GtkWidget *widget, gpointer data) {
+  gtk_main_quit();
+}
+
 void on_button_clicked_login_text(GtkWidget *widget, gpointer data) {
   // 获取账号文本框中的内容
   GtkWidget *entry1 = GTK_WIDGET(data);

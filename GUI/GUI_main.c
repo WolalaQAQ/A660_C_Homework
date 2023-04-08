@@ -7,6 +7,7 @@ void Gmain(int argc, char *argv[]) {
   GtkWidget *window_pass = gtk_window_new(GTK_WINDOW_TOPLEVEL);
   gtk_window_set_title(GTK_WINDOW(window_pass), "登录&注册");
   gtk_window_set_default_size(GTK_WINDOW(window_pass), 769, 615);
+  gtk_window_set_deletable(GTK_WINDOW(window_pass), TRUE);
 
   // 创建一个布局容器
   GtkWidget *layout = gtk_layout_new(NULL, NULL);
@@ -20,14 +21,14 @@ void Gmain(int argc, char *argv[]) {
   gtk_layout_put(GTK_LAYOUT(layout), image, 0, 0);
 
     // 创建一个标题
-  GtkWidget *button = gtk_button_new_with_label("欢迎来到本电影院");
-  gtk_widget_set_size_request(button, 600, 100);
-  gtk_layout_put(GTK_LAYOUT(layout), button, 90, 10);
-  // 设置按钮的字体大小
-  PangoContext *context = gtk_widget_get_pango_context(button);
-  PangoFontDescription *font_desc =
-      pango_font_description_from_string("STKaiti 32");
-  gtk_widget_override_font(button, font_desc);
+  GtkWidget *label = gtk_label_new("欢迎来到本电影院");
+  gtk_widget_set_size_request(label, 600, 100);
+
+  // 设置标签的字体大小
+  PangoFontDescription *font_desc = pango_font_description_from_string("STKaiti 32");
+  gtk_widget_override_font(label, font_desc);
+
+  gtk_layout_put(GTK_LAYOUT(layout), label, 90, 10);
 
   // 创建一个按钮
   GtkWidget *button1 = gtk_button_new_with_label("登录");
@@ -52,6 +53,7 @@ void Gmain(int argc, char *argv[]) {
                    "background1.png");
   g_signal_connect(button2, "clicked", G_CALLBACK(on_button_clicked_register),
                    "background3.png");
+  g_signal_connect(G_OBJECT(window_pass), "delete-event", G_CALLBACK(on_window_close), NULL);
 
   // 显示窗口和所有控件
   gtk_widget_show_all(window_pass);
