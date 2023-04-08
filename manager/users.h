@@ -7,14 +7,15 @@
 
 #include "movie.h"
 #include "store.h"
+#include "vector.h"
 
 struct User {
   int identity;
   char name[20];
   char password[20];
   float balance;
-  struct Vector* tickets;
-  struct Vector* foods;
+  Vector* tickets;
+  Vector* foods;
 };
 
 #endif  // A660_C_HOMEWORK_USERS_H
