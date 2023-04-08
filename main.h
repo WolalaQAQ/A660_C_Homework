@@ -16,6 +16,7 @@
 #include "movie.h"
 #include "store.h"
 #include "users.h"
+#include "GUI_main.h"
 // #include "YoloFaceDetector.h"
 
 #endif  // A660_C_HOMEWORK_MAIN_H

@@ -1,6 +1,6 @@
-#include"GUI_default.h"
+#include "GUI_main.h"
 
-int main(int argc, char *argv[]) {
+void Gmain(int argc, char *argv[]) {
   gtk_init(&argc, &argv);
 
   // 创建一个新窗口
@@ -56,5 +56,4 @@ int main(int argc, char *argv[]) {
   // 显示窗口和所有控件
   gtk_widget_show_all(window);
   gtk_main();
-  return 0;
 }

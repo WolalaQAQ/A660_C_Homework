@@ -44,8 +44,7 @@ add_subdirectory(GUI)
 aux_source_directory(./GUI GUI_SRCS)
 
 set_source_files_properties(
-        main.c
-        ${ML_SRCS}
+        # ${ML_SRCS}
         PROPERTIES LANGUAGE CXX
 )
 
