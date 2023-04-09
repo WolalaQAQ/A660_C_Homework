@@ -8,7 +8,16 @@
 #include "movie.h"
 #include "users.h"
 
+typedef struct {
+  GtkWidget *window;
+  Node *movie_node;
+}MovieData;
+
 void on_button_clicked_movie_manager(GtkWidget* button, gpointer data);
+void on_menu_item_clicked_add_movie(GtkMenuItem *menuitem, gpointer user_data);
+void on_menu_item_clicked_delete_movie(GtkMenuItem *menuitem, gpointer user_data);
+void on_add_movie_ok_button_clicked(GtkWidget* button, gpointer data);
+void on_del_movie_ok_button_clicked(GtkWidget* button, gpointer data);
 void on_button_clicked_movie_times_manager(GtkWidget* button, gpointer data);
 void on_button_clicked_guest_button1(GtkWidget* button, gpointer data);
 void on_button_clicked_guest_button2(GtkWidget* button, gpointer data);

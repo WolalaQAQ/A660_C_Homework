@@ -90,8 +90,40 @@ void deleteNode(struct Node** headRef, void* data) {
     free(deletedNode);
   }
 }
+
+// 删除链表中指定位置的节点
+void deleteNodeByIndex(struct Node** headRef, int index) {
+  // 如果链表为空，则无法删除
+  if (*headRef == NULL) {
+    return;
+  }
+
+  // 如果要删除的节点是链表头，则将链表头指向下一个节点
+  if (index == 0) {
+    *headRef = (*headRef)->next;
+    return;
+  }
+
+  // 找到要删除节点的前一个节点
+  struct Node* prevNode = *headRef;
+  for (int i = 0; i < index - 1; i++) {
+    prevNode = prevNode->next;
+    if (prevNode == NULL) {
+      printf("Error: Index out of range\n");
+      return;
+    }
+  }
+
+  // 如果找到了要删除的节点，则将其从链表中删除
+  if (prevNode->next != NULL) {
+    struct Node* deletedNode = prevNode->next;
+    prevNode->next = deletedNode->next;
+    free(deletedNode);
+  }
+}
+
 // 获取链表的长度
-int length(struct Node* head) {
+int getListLength(struct Node* head) {
   int len = 0;
   struct Node* currNode = head;
   while (currNode != NULL) {

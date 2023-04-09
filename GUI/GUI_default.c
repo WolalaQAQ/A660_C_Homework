@@ -208,7 +208,7 @@ void on_button_clicked_register_confirm(GtkWidget *button, RegistrationData *dat
       return;
     }
     g_free(data);
-    free(current_user_list);
+    freeList(current_user_list);
     free(new_user);
     fclose(current_user_file);
   }

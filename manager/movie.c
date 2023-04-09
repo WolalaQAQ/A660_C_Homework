@@ -25,20 +25,37 @@ FILE* readMovieFile() {
 }
 
 void writeMovieFile(struct Movie* movie) {
-  FILE* file = fopen("movie.txt", "a+");
+  FILE* file = fopen("./data/movie.txt", "a+");
   if (file == NULL) {
     printf("Error opening file!\n");
     exit(1);
   }
-  fprintf(file, "%s %d %s %s %s %s %s %f", movie->name, movie->year,
+  fprintf(file, "%s %d %s %s %s %s %s %f\n", movie->name, movie->year,
           movie->director, movie->actor, movie->country, movie->language,
           movie->introduction, movie->score);
   fclose(file);
 }
 
+void overWriteMovieFile(Node* head) {
+  FILE* file = fopen("./data/movie.txt", "w");
+  if (file == NULL) {
+    printf("Error opening file!\n");
+    exit(1);
+  }
+  Node* current = head;
+  while (current != NULL) {
+    struct Movie* movie = (struct Movie*) current->data;
+    fprintf(file, "%s %d %s %s %s %s %s %f\n", movie->name, movie->year,
+            movie->director, movie->actor, movie->country, movie->language,
+            movie->introduction, movie->score);
+    current = current->next;
+  }
+  fclose(file);
+}
+
 Node* getMovieList(FILE* movie_file) {
   Node* head = NULL;
-  char name[20], director[20], actor[20], country[15], language[15], introduction[200];
+  char name[100], director[500], actor[500], country[15], language[15], introduction[1000];
   int year;
   float score;
   while (fscanf(movie_file, "%s %d %s %s %s %s %s %f", name, &year, director, actor, country, language, introduction, &score) == 8) {
@@ -67,6 +84,20 @@ void printMovieList(Node* head) {
   }
 }
 
+int findMovieNode(Node* head, struct Movie* movie) {
+  Node* current = head;
+  int index = 0;
+  while (current != NULL) {
+        struct Movie* current_movie = (struct Movie*)current->data;
+        if (strcmp(current_movie->name, movie->name) == 0) {
+          return index;
+        }
+        current = current->next;
+        index++;
+  }
+  return -1;
+}
+
 FILE* readMovieTimesFile() {
   FILE* file = fopen("./data/movie_times.txt", "r");
   if (file == NULL) {
@@ -86,7 +117,7 @@ void writeMovieTimesFile(struct MovieTimes* movie_times) {
         printf("Error opening file!\n");
         exit(1);
   }
-  fprintf(file, "%s %s %f %d %s %d %s %s %s %s %s %f",
+  fprintf(file, "%s %s %f %d %s %d %s %s %s %s %s %f\n",
           movie_times->time, movie_times->cinema, movie_times->price, movie_times->seat_remain,
           movie_times->movie->name, movie_times->movie->year, movie_times->movie->director, movie_times->movie->actor,
           movie_times->movie->country, movie_times->movie->language, movie_times->movie->introduction, movie_times->movie->score);
@@ -103,11 +134,11 @@ Node* getMovieTimesList(FILE* movie_times_file) {
   //电影信息临时变量
   char name[20];
   int year;
-  char director[100];
-  char actor[100];
+  char director[500];
+  char actor[500];
   char country[15];
   char language[15];
-  char introduction[200];
+  char introduction[1000];
   float score;
 
   while (fscanf(movie_times_file, "%s %s %f %d %s %d %s %s %s %s %s %f", time, cinema, &price, &seat_remain,
@@ -181,11 +212,11 @@ Node* getTicketList(FILE* ticket_file) {
   //电影信息临时变量
   char name[20];
   int year;
-  char director[100];
-  char actor[100];
+  char director[500];
+  char actor[500];
   char country[15];
   char language[15];
-  char introduction[200];
+  char introduction[1000];
   float score;
 
   while (fscanf(ticket_file, "%s %s %s %s %f %s %d %s %s %s %s %s %f", seat_number, key, time, cinema, &price,

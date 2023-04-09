@@ -12,13 +12,13 @@
 #include "vector.h"
 
 struct Movie {
-  char name[20];
+  char name[100];
   int year;
-  char director[100];
-  char actor[100];
+  char director[500];
+  char actor[500];
   char country[15];
   char language[15];
-  char introduction[200];
+  char introduction[1000];
   float score;
 };
 
@@ -40,8 +40,10 @@ void generateKey(struct Ticket* ticket);
 
 FILE* readMovieFile();
 void writeMovieFile(struct Movie* movie);
+void overWriteMovieFile(Node* head);
 Node* getMovieList(FILE* movie_file);
 void printMovieList(Node* head);
+int findMovieNode(Node* head, struct Movie* movie);
 
 FILE* readMovieTimesFile();
 void writeMovieTimesFile(struct MovieTimes* movie_times);

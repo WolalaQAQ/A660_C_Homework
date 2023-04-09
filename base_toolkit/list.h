@@ -19,7 +19,8 @@ void insertAtHead(struct Node** headRef, void* data);
 void insertAtTail(struct Node** headRef, void* data);
 void insertAtIndex(struct Node** headRef, int index, void* data);
 void deleteNode(struct Node** headRef, void* data);
-int length(struct Node* head);
+void deleteNodeByIndex(struct Node** headRef, int index);
+int getListLength(struct Node* head);
 void freeList(struct Node* head);
 
 #endif  // A660_C_HOMEWORK_LIST_H
