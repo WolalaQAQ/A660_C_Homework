@@ -217,7 +217,7 @@ void on_button_clicked_register_confirm(GtkWidget *button, RegistrationData *dat
 void on_button_clicked_movie(GtkWidget *button, gpointer data) {
   // 创建一个新窗口
   GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-  gtk_window_set_title(GTK_WINDOW(window), "电影管理");
+  gtk_window_set_title(GTK_WINDOW(window), "电影和场次管理");
   gtk_window_set_default_size(GTK_WINDOW(window), 600, 600);
 
   // 创建一个布局容器
@@ -249,7 +249,7 @@ void on_button_clicked_movie(GtkWidget *button, gpointer data) {
 
 
   // 连接按钮的 "clicked" 事件信号,点击按钮的事件在此处添加
-  g_signal_connect(movie_manager_button, "clicked", G_CALLBACK(on_button_clicked_movie_manager),
+  g_signal_connect(movie_manager_button, "clicked", G_CALLBACK(WindowMovieManager),
                    "background1.png");
   g_signal_connect(movie_times_manager_button, "clicked", G_CALLBACK(on_button_clicked_movie_times_manager),
                    "background3.png");

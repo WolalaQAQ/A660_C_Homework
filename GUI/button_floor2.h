@@ -13,7 +13,7 @@ typedef struct {
   Node *movie_node;
 }MovieData;
 
-void on_button_clicked_movie_manager(GtkWidget* button, gpointer data);
+void WindowMovieManager(GtkWidget* button, gpointer data);
 void on_menu_item_clicked_add_movie(GtkMenuItem *menuitem, gpointer user_data);
 void on_menu_item_clicked_delete_movie(GtkMenuItem *menuitem, gpointer user_data);
 void on_add_movie_ok_button_clicked(GtkWidget* button, gpointer data);

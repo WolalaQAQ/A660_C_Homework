@@ -3,7 +3,17 @@
 //
 #include "button_floor2.h"
 
-void on_button_clicked_movie_manager(GtkWidget* button, gpointer data) {
+void WindowMovieManager(GtkWidget* button, gpointer data) {
+  // 创建新窗口
+  GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+  gtk_window_set_title(GTK_WINDOW(window), "电影管理");
+  gtk_window_set_default_size(GTK_WINDOW(window), 800, 600);
+  // 加载样式表
+  GtkCssProvider *provider = gtk_css_provider_new();
+  gtk_css_provider_load_from_path(provider, "./css/movie_table.css", NULL);
+  GtkStyleContext *context = gtk_widget_get_style_context(window);
+  gtk_style_context_add_provider(context, GTK_STYLE_PROVIDER(provider), GTK_STYLE_PROVIDER_PRIORITY_USER);
+  g_object_unref(provider);
   // 获取电影信息链表
   FILE* current_movie_data = readMovieFile();
   Node* current_movie_node = getMovieList(current_movie_data);
@@ -26,8 +36,11 @@ void on_button_clicked_movie_manager(GtkWidget* button, gpointer data) {
   gtk_menu_button_set_direction(GTK_MENU_BUTTON(menu_button), GTK_ARROW_DOWN);
   gtk_menu_button_set_popup(GTK_MENU_BUTTON(menu_button), menu);
   // 将菜单项添加到菜单按钮的菜单中
-  g_signal_connect(add_movie, "activate", G_CALLBACK(on_menu_item_clicked_add_movie), NULL);
-  g_signal_connect(del_movie, "activate", G_CALLBACK(on_menu_item_clicked_delete_movie), current_movie_node);
+  g_signal_connect(add_movie, "activate", G_CALLBACK(on_menu_item_clicked_add_movie), window);
+  MovieData *del_data = g_new(MovieData, 1);
+  del_data->window = window;
+  del_data->movie_node = current_movie_node;
+  g_signal_connect(del_movie, "activate", G_CALLBACK(on_menu_item_clicked_delete_movie), del_data);
   // 添加表头
   gtk_grid_attach(GTK_GRID(grid), menu_button, 0, 0, 1, 1);
   gtk_grid_attach(GTK_GRID(grid), gtk_label_new("片名"), 0, 1, 1, 1);
@@ -106,17 +119,7 @@ void on_button_clicked_movie_manager(GtkWidget* button, gpointer data) {
   GtkWidget *scroll_window = gtk_scrolled_window_new(NULL, NULL);
   gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll_window), GTK_POLICY_AUTOMATIC, GTK_POLICY_ALWAYS);
   gtk_container_add(GTK_CONTAINER(scroll_window), grid);
-  // 创建新窗口并将可滚动窗口添加到其中
-  GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-  gtk_window_set_title(GTK_WINDOW(window), "电影管理");
-  gtk_window_set_default_size(GTK_WINDOW(window), 800, 600);
   gtk_container_add(GTK_CONTAINER(window), scroll_window);
-  // 加载样式表
-  GtkCssProvider *provider = gtk_css_provider_new();
-  gtk_css_provider_load_from_path(provider, "./css/movie_table.css", NULL);
-  GtkStyleContext *context = gtk_widget_get_style_context(window);
-  gtk_style_context_add_provider(context, GTK_STYLE_PROVIDER(provider), GTK_STYLE_PROVIDER_PRIORITY_USER);
-  g_object_unref(provider);
   // 释放链表和文件资源
   freeList(current_movie_node);
   // 显示窗口和所有控件
@@ -124,6 +127,7 @@ void on_button_clicked_movie_manager(GtkWidget* button, gpointer data) {
 }
 
 void on_menu_item_clicked_add_movie(GtkMenuItem *menuitem, gpointer user_data) {
+  gtk_widget_destroy(user_data);
   // 创建一个新窗口和表格
   GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
   gtk_window_set_title(GTK_WINDOW(window), "添加电影");
@@ -174,14 +178,17 @@ void on_menu_item_clicked_add_movie(GtkMenuItem *menuitem, gpointer user_data) {
   GtkWidget *ok_button = gtk_button_new_with_label("确认");
   // 将按钮添加到表格中
   gtk_grid_attach(GTK_GRID(grid), ok_button, 0, 8, 1, 1);
-  // 为“确认”按钮和“取消”按钮连接回调函数
+  // 为“确认”按钮连接回调函数
   g_signal_connect(ok_button, "clicked", G_CALLBACK(on_add_movie_ok_button_clicked), window);
   // 显示窗口和所有控件
   gtk_widget_show_all(window);
 }
 
 void on_menu_item_clicked_delete_movie(GtkMenuItem *menuitem, gpointer user_data) {
-  Node* current_movie_node = user_data;
+  MovieData *current_del_data = user_data;
+  GtkWidget *current_window = current_del_data->window;
+  Node* current_movie_node = current_del_data->movie_node;
+  gtk_widget_destroy(current_window);
   // 创建一个新窗口和表格
   GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
   gtk_window_set_title(GTK_WINDOW(window), "删除电影");
@@ -243,6 +250,7 @@ void on_add_movie_ok_button_clicked(GtkWidget* button, gpointer data) {
   writeMovieFile(new_movie);
   //关闭窗口
   gtk_widget_destroy(window);
+  WindowMovieManager(NULL, NULL);
 }
 
 void on_del_movie_ok_button_clicked(GtkWidget* button, gpointer data) {
@@ -280,6 +288,7 @@ void on_del_movie_ok_button_clicked(GtkWidget* button, gpointer data) {
     gtk_widget_destroy(movie_data->window);
     free(new_movie);
   }
+  WindowMovieManager(NULL, NULL);
 }
 
 void on_button_clicked_movie_times_manager(GtkWidget* button, gpointer data) {
