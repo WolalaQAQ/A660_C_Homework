@@ -17,17 +17,17 @@ endif()
 if(WIN32)
         set(PKG_CONFIG_EXECUTABLE ${PROJECT_SOURCE_DIR}/lib/gtk/bin/pkg-config.exe)
         set(GTK3_DIR ${PROJECT_SOURCE_DIR}/lib/gtk)
-        set(OpenCV_DIR ${PROJECT_SOURCE_DIR}/lib/OpenCV)
-        set(OpenVINO_DIR ${PROJECT_SOURCE_DIR}/lib/OpenVINO/runtime/cmake)
+#        set(OpenCV_DIR ${PROJECT_SOURCE_DIR}/lib/OpenCV)
+#        set(OpenVINO_DIR ${PROJECT_SOURCE_DIR}/lib/OpenVINO/runtime/cmake)
 endif ()
 
-#OpenCV
-find_package(OpenCV REQUIRED)
-include_directories(${OpenCV_INCLUDE_DIR})
-
-#OpenVINO 2022.3
-find_package(OpenVINO REQUIRED)
-include_directories(${OpenVINO_INCLUDE_DIR})
+##OpenCV
+#find_package(OpenCV REQUIRED)
+#include_directories(${OpenCV_INCLUDE_DIR})
+#
+##OpenVINO 2022.3
+#find_package(OpenVINO REQUIRED)
+#include_directories(${OpenVINO_INCLUDE_DIR})
 
 #GTK3
 find_package(PkgConfig REQUIRED)
@@ -66,8 +66,8 @@ add_executable(A660_C_Homework
         ${GUI_SRCS}
         )
 target_link_libraries(A660_C_Homework
-        ${OpenCV_LIBS}
-        openvino::runtime
+#        ${OpenCV_LIBS}
+#        openvino::runtime
         ${GTK3_LIBRARIES}
         )
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
