@@ -1,9 +1,58 @@
 //
-// Created by wolala on 23-4-8.
+// Created by wolala on 23-4-13.
 //
-#include "button_floor2.h"
 
-void WindowMovieManager(GtkWidget* button, gpointer data) {
+#include "MovieManageWindow.h"
+
+
+void MainMovieManageWindow(GtkWidget *button, gpointer data) {
+  // 创建一个新窗口
+  GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+  gtk_window_set_title(GTK_WINDOW(window), "电影和场次管理");
+  gtk_window_set_default_size(GTK_WINDOW(window), 600, 600);
+  // 创建一个布局容器
+  GtkWidget *layout = gtk_layout_new(NULL, NULL);
+  gtk_container_add(GTK_CONTAINER(window), layout);
+  // 加载图片
+  GtkWidget *image =
+      gtk_image_new_from_file("C:\\Users\\wangziyi\\Desktop\\GUI\\bk2_S.jpg");
+  // 将图片添加到布局容器中
+  gtk_layout_put(GTK_LAYOUT(layout), image, 0, 0);
+
+  GtkWidget *movie_manager_button = gtk_button_new_with_label("电影管理");
+  gtk_widget_set_size_request(movie_manager_button, 300, 120);
+  gtk_layout_put(GTK_LAYOUT(layout), movie_manager_button, 150, 40);
+  PangoFontDescription *font_desc1 =
+      pango_font_description_from_string("STKaiti 24");
+  gtk_widget_override_font(movie_manager_button, font_desc1);
+
+  GtkWidget *movie_times_manager_button = gtk_button_new_with_label("场次管理");
+  gtk_widget_set_size_request(movie_times_manager_button, 300, 120);
+  gtk_layout_put(GTK_LAYOUT(layout), movie_times_manager_button, 150, 240);
+  PangoFontDescription *font_desc2 =
+      pango_font_description_from_string("STKaiti 24");
+  gtk_widget_override_font(movie_times_manager_button, font_desc2);
+
+  GtkWidget *ticket_manager_button = gtk_button_new_with_label("票务管理");
+  gtk_widget_set_size_request(ticket_manager_button, 300, 120);
+  gtk_layout_put(GTK_LAYOUT(layout), ticket_manager_button, 150, 440);
+  PangoFontDescription *font_desc3 =
+      pango_font_description_from_string("STKaiti 24");
+  gtk_widget_override_font(ticket_manager_button, font_desc3);
+
+  // 连接按钮的 "clicked" 事件信号,点击按钮的事件在此处添加
+  g_signal_connect(movie_manager_button, "clicked",
+                   G_CALLBACK(MovieManageWindow), NULL);
+  g_signal_connect(movie_times_manager_button, "clicked",
+                   G_CALLBACK(MovieTimesManageWindow), NULL);
+  g_signal_connect(ticket_manager_button, "clicked",
+                   G_CALLBACK(TicketManageWindow), NULL),
+  // 显示窗口和所有控件
+  gtk_widget_show_all(window);
+}
+
+
+void MovieManageWindow(GtkWidget* button, gpointer data) {
   // 创建新窗口
   GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
   gtk_window_set_title(GTK_WINDOW(window), "电影管理");
@@ -126,8 +175,18 @@ void WindowMovieManager(GtkWidget* button, gpointer data) {
   gtk_widget_show_all(window);
 }
 
-void on_menu_item_clicked_add_movie(GtkMenuItem *menuitem, gpointer user_data) {
-  gtk_widget_destroy(user_data);
+
+void MovieTimesManageWindow(GtkWidget *button, gpointer data) {
+
+}
+
+
+void TicketManageWindow(GtkWidget *button, gpointer data) {
+
+}
+
+
+void AddMovieWindow(GtkWidget *button, gpointer data) {
   // 创建一个新窗口和表格
   GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
   gtk_window_set_title(GTK_WINDOW(window), "添加电影");
@@ -137,7 +196,6 @@ void on_menu_item_clicked_add_movie(GtkMenuItem *menuitem, gpointer user_data) {
   gtk_grid_set_column_spacing(GTK_GRID(grid), 5);
   gtk_grid_set_row_spacing(GTK_GRID(grid), 5);
   gtk_container_add(GTK_CONTAINER(window), grid);
-
   // 创建标签和输入框，用于输入电影信息
   GtkWidget *name_label = gtk_label_new("片名:");
   GtkWidget *name_entry = gtk_entry_new();
@@ -155,7 +213,6 @@ void on_menu_item_clicked_add_movie(GtkMenuItem *menuitem, gpointer user_data) {
   GtkWidget *introduction_entry = gtk_entry_new();
   GtkWidget *score_label = gtk_label_new("评分:");
   GtkWidget *score_entry = gtk_entry_new();
-
   // 将标签和输入框添加到表格中
   gtk_grid_attach(GTK_GRID(grid), name_label, 0, 0, 1, 1);
   gtk_grid_attach(GTK_GRID(grid), name_entry, 1, 0, 1, 1);
@@ -173,7 +230,6 @@ void on_menu_item_clicked_add_movie(GtkMenuItem *menuitem, gpointer user_data) {
   gtk_grid_attach(GTK_GRID(grid), introduction_entry, 1, 6, 1, 1);
   gtk_grid_attach(GTK_GRID(grid), score_label, 0, 7, 1, 1);
   gtk_grid_attach(GTK_GRID(grid), score_entry, 1, 7, 1, 1);
-
   // 创建“确认”按钮和“取消”按钮
   GtkWidget *ok_button = gtk_button_new_with_label("确认");
   // 将按钮添加到表格中
@@ -184,11 +240,9 @@ void on_menu_item_clicked_add_movie(GtkMenuItem *menuitem, gpointer user_data) {
   gtk_widget_show_all(window);
 }
 
-void on_menu_item_clicked_delete_movie(GtkMenuItem *menuitem, gpointer user_data) {
-  MovieData *current_del_data = user_data;
-  GtkWidget *current_window = current_del_data->window;
-  Node* current_movie_node = current_del_data->movie_node;
-  gtk_widget_destroy(current_window);
+
+void DeleteMovieWindow(GtkWidget *button, gpointer data) {
+  Node* current_movie_list = data;
   // 创建一个新窗口和表格
   GtkWidget *window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
   gtk_window_set_title(GTK_WINDOW(window), "删除电影");
@@ -210,12 +264,13 @@ void on_menu_item_clicked_delete_movie(GtkMenuItem *menuitem, gpointer user_data
   gtk_grid_attach(GTK_GRID(grid), ok_button, 0, 8, 1, 1);
   // 为“确认”按钮和“取消”按钮连接回调函数
   MovieData *movie_data = g_new(MovieData, 1);
-  movie_data->movie_node = current_movie_node;
+  movie_data->movie_node = current_movie_list;
   movie_data->window = window;
   g_signal_connect(ok_button, "clicked", G_CALLBACK(on_del_movie_ok_button_clicked), movie_data);
   // 显示窗口和所有控件
   gtk_widget_show_all(window);
 }
+
 
 void on_add_movie_ok_button_clicked(GtkWidget* button, gpointer data) {
   // 获取输入框中的电影信息
@@ -250,8 +305,9 @@ void on_add_movie_ok_button_clicked(GtkWidget* button, gpointer data) {
   writeMovieFile(new_movie);
   //关闭窗口
   gtk_widget_destroy(window);
-  WindowMovieManager(NULL, NULL);
+  MovieManageWindow(NULL, NULL);
 }
+
 
 void on_del_movie_ok_button_clicked(GtkWidget* button, gpointer data) {
   MovieData *movie_data = data;
@@ -288,35 +344,20 @@ void on_del_movie_ok_button_clicked(GtkWidget* button, gpointer data) {
     gtk_widget_destroy(movie_data->window);
     free(new_movie);
   }
-  WindowMovieManager(NULL, NULL);
+  MovieManageWindow(NULL, NULL);
 }
 
-void on_button_clicked_movie_times_manager(GtkWidget* button, gpointer data) {
 
+void on_menu_item_clicked_delete_movie(GtkMenuItem *menuitem, gpointer user_data) {
+  MovieData *current_del_data = user_data;
+  GtkWidget *current_window = current_del_data->window;
+  Node* current_movie_list = current_del_data->movie_node;
+  gtk_widget_destroy(current_window);
+  DeleteMovieWindow(NULL, current_movie_list);
 }
-void on_button_clicked_guest_button1(GtkWidget* button, gpointer data) {
-  FILE* current_user_data = readUserFile();
-  Node* current_user_node = getUserList(current_user_data);
-  printUserList(current_user_node, USER_TYPE_GUEST);
-}
-void on_button_clicked_guest_button2(GtkWidget* button, gpointer data) {
-  FILE* current_user_data = readUserFile();
-  Node* current_user_node = getUserList(current_user_data);
-  printUserList(current_user_node, USER_TYPE_ADMIN);
-}
-void on_button_clicked_sell_button1(GtkWidget* button, gpointer data) {
-  FILE* current_good_data = readGoodFile();
-  Node* current_good_node = getGoodList(current_good_data);
-  printGoodList(current_good_node, FOOD_TYPE_SNACK);
-  printGoodList(current_good_node, FOOD_TYPE_DRINK);
-}
-void on_button_clicked_sell_button2(GtkWidget* button, gpointer data) {
-  FILE* current_good_data = readGoodFile();
-  Node* current_good_node = getGoodList(current_good_data);
-  printGoodList(current_good_node, FOOD_TYPE_DERIVATIVE);
-}
-void on_button_clicked_sell_button3(GtkWidget* button, gpointer data) {
-  FILE* current_ticket_data = readTicketFile();
-  Node* current_ticket_node = getTicketList(current_ticket_data);
-  printTicketList(current_ticket_node);
+
+
+void on_menu_item_clicked_add_movie(GtkMenuItem *menuitem, gpointer user_data) {
+  gtk_widget_destroy(user_data);
+  AddMovieWindow(NULL, NULL);
 }

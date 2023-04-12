@@ -5,9 +5,9 @@
 #ifndef A660_C_HOMEWORK_USERS_H
 #define A660_C_HOMEWORK_USERS_H
 
-#include "movie.h"
-#include "store.h"
+#include "good.h"
 #include "list.h"
+#include "movie.h"
 
 enum Identity {
   USER_TYPE_GUEST = 0,

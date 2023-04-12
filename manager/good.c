@@ -1,7 +1,7 @@
 //
 // Created by Adminstrator on 2023/3/21.
 //
-#include "store.h"
+#include "good.h"
 
 FILE* readGoodFile() {
   FILE* file = fopen("./data/good.txt", "r");

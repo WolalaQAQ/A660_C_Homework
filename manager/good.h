@@ -2,8 +2,8 @@
 // Created by Adminstrator on 2023/3/21.
 //
 
-#ifndef A660_C_HOMEWORK_STORE_H
-#define A660_C_HOMEWORK_STORE_H
+#ifndef A660_C_HOMEWORK_GOOD_H
+#define A660_C_HOMEWORK_GOOD_H
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -29,4 +29,4 @@ void writeGoodFile(struct Good* good);
 Node* getGoodList(FILE* good_file);
 void printGoodList(Node* head, enum GoodType type);
 
-#endif  // A660_C_HOMEWORK_STORE_H
+#endif  // A660_C_HOMEWORK_GOOD_H
