@@ -25,6 +25,11 @@ typedef struct {
 typedef struct {
   GtkWidget *window;
   Node *movie_node;
-}MovieData;
+} MovieData;
 
+typedef struct {
+  GtkWidget *search_entry;
+  GtkWidget *grid;
+  Node* head;
+} SearchData;
 #endif  // A660_C_HOMEWORK_DATASTRUCT_H

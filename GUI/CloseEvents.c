@@ -20,3 +20,20 @@ gboolean on_window_close_show_parent_window(GtkWidget *widget, GdkEvent *event, 
   // 阻止默认的 "delete-event" 处理
   return TRUE;
 }
+
+// 清空表格中的所有行
+void clearTableRows(GtkWidget *grid, int start_row) {
+  // 从指定的行开始，遍历所有行和列，将每个单元格中的控件都从表格中移除
+  for (int row = start_row; ; row++) {
+    for (int col = 0; ; col++) {
+      GtkWidget *widget = gtk_grid_get_child_at(GTK_GRID(grid), col, row);
+      if (widget != NULL) {
+        gtk_container_remove(GTK_CONTAINER(grid), widget);
+      }
+      else {
+        return;
+      }
+    }
+  }
+}
+
