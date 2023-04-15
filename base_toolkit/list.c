@@ -3,9 +3,9 @@
 
 
 // 在链表头插入一个新节点
-void insertAtHead(struct Node** headRef, void* data) {
+void insertAtHead(Node** headRef, void* data) {
   // 创建一个新节点
-  struct Node* newNode = (struct Node*) malloc(sizeof(struct Node));
+  Node* newNode = (Node*) malloc(sizeof(Node));
   newNode->data = data;
   newNode->next = *headRef;
 
@@ -14,9 +14,9 @@ void insertAtHead(struct Node** headRef, void* data) {
 }
 
 // 在链表尾插入一个新节点
-void insertAtTail(struct Node** headRef, void* data) {
+void insertAtTail(Node** headRef, void* data) {
   // 创建一个新节点
-  struct Node* newNode = (struct Node*) malloc(sizeof(struct Node));
+  Node* newNode = (Node*) malloc(sizeof(Node));
   newNode->data = data;
   newNode->next = NULL;
 
@@ -27,7 +27,7 @@ void insertAtTail(struct Node** headRef, void* data) {
   }
 
   // 找到链表的最后一个节点
-  struct Node* lastNode = *headRef;
+  Node* lastNode = *headRef;
   while (lastNode->next != NULL) {
     lastNode = lastNode->next;
   }
@@ -37,9 +37,9 @@ void insertAtTail(struct Node** headRef, void* data) {
 }
 
 // 在指定位置插入一个新节点
-void insertAtIndex(struct Node** headRef, int index, void* data) {
+void insertAtIndex(Node** headRef, int index, void* data) {
   // 创建一个新节点
-  struct Node* newNode = (struct Node*) malloc(sizeof(struct Node));
+  Node* newNode = (Node*) malloc(sizeof(Node));
   newNode->data = data;
 
   // 如果插入位置为0，则将新节点作为链表头
@@ -50,7 +50,7 @@ void insertAtIndex(struct Node** headRef, int index, void* data) {
   }
 
   // 找到要插入位置的前一个节点
-  struct Node* prevNode = *headRef;
+  Node* prevNode = *headRef;
   for (int i = 0; i < index - 1; i++) {
     prevNode = prevNode->next;
     if (prevNode == NULL) {
@@ -65,7 +65,7 @@ void insertAtIndex(struct Node** headRef, int index, void* data) {
 }
 
 // 删除链表中第一个出现的指定节点
-void deleteNode(struct Node** headRef, void* data) {
+void deleteNode(Node** headRef, void* data) {
   // 如果链表为空，则无法删除
   if (*headRef == NULL) {
     return;
@@ -78,21 +78,21 @@ void deleteNode(struct Node** headRef, void* data) {
   }
 
   // 找到要删除节点的前一个节点
-  struct Node* prevNode = *headRef;
+  Node* prevNode = *headRef;
   while (prevNode->next != NULL && prevNode->next->data != data) {
     prevNode = prevNode->next;
   }
 
   // 如果找到了要删除的节点，则将其从链表中删除
   if (prevNode->next != NULL) {
-    struct Node* deletedNode = prevNode->next;
+    Node* deletedNode = prevNode->next;
     prevNode->next = deletedNode->next;
     free(deletedNode);
   }
 }
 
 // 删除链表中指定位置的节点
-void deleteNodeByIndex(struct Node** headRef, int index) {
+void deleteNodeByIndex(Node** headRef, int index) {
   // 如果链表为空，则无法删除
   if (*headRef == NULL) {
     return;
@@ -105,7 +105,7 @@ void deleteNodeByIndex(struct Node** headRef, int index) {
   }
 
   // 找到要删除节点的前一个节点
-  struct Node* prevNode = *headRef;
+  Node* prevNode = *headRef;
   for (int i = 0; i < index - 1; i++) {
     prevNode = prevNode->next;
     if (prevNode == NULL) {
@@ -116,16 +116,16 @@ void deleteNodeByIndex(struct Node** headRef, int index) {
 
   // 如果找到了要删除的节点，则将其从链表中删除
   if (prevNode->next != NULL) {
-    struct Node* deletedNode = prevNode->next;
+    Node* deletedNode = prevNode->next;
     prevNode->next = deletedNode->next;
     free(deletedNode);
   }
 }
 
 // 获取链表的长度
-int getListLength(struct Node* head) {
+int getListLength(Node* head) {
   int len = 0;
-  struct Node* currNode = head;
+  Node* currNode = head;
   while (currNode != NULL) {
     len++;
     currNode = currNode->next;
@@ -134,10 +134,10 @@ int getListLength(struct Node* head) {
 }
 
 // 释放链表中所有节点的内存
-void freeList(struct Node* head) {
-  struct Node* currNode = head;
+void freeList(Node* head) {
+  Node* currNode = head;
   while (currNode != NULL) {
-    struct Node* nextNode = currNode->next;
+    Node* nextNode = currNode->next;
     free(currNode);
     currNode = nextNode;
   }

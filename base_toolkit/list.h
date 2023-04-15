@@ -13,14 +13,14 @@
 typedef struct Node {
   void* data;           // 节点的值的指针
   struct Node* next;  // 指向下一个节点的指针
-}Node;
+} Node;
 
-void insertAtHead(struct Node** headRef, void* data);
-void insertAtTail(struct Node** headRef, void* data);
-void insertAtIndex(struct Node** headRef, int index, void* data);
-void deleteNode(struct Node** headRef, void* data);
-void deleteNodeByIndex(struct Node** headRef, int index);
-int getListLength(struct Node* head);
-void freeList(struct Node* head);
+void insertAtHead(Node** headRef, void* data);
+void insertAtTail(Node** headRef, void* data);
+void insertAtIndex(Node** headRef, int index, void* data);
+void deleteNode(Node** headRef, void* data);
+void deleteNodeByIndex(Node** headRef, int index);
+int getListLength(Node* head);
+void freeList(Node* head);
 
 #endif  // A660_C_HOMEWORK_LIST_H
