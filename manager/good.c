@@ -3,6 +3,7 @@
 //
 #include "good.h"
 
+// 打开商品信息文件，并返回文件指针
 FILE* readGoodFile() {
   FILE* file = fopen("./data/good.txt", "r");
   if (file == NULL) {
@@ -16,6 +17,7 @@ FILE* readGoodFile() {
   return file;
 }
 
+ // 打开商品信息文件，并在文件末尾写入商品信息
 void writeGoodFile(struct Good* good) {
   FILE* file = fopen("./data/good.txt", "a+");
   if (file == NULL) {
@@ -25,6 +27,7 @@ void writeGoodFile(struct Good* good) {
   fprintf(file, "%d %s %s %f", good->type, good->name, good->description, good->price);
 }
 
+// 从文件中读取商品信息，并将商品信息存储在链表中
 Node* getGoodList(FILE* good_file) {
   Node* head = NULL;
   enum GoodType type;
@@ -41,7 +44,7 @@ Node* getGoodList(FILE* good_file) {
   }
   return head;
 }
-
+// 遍历链表，并打印商品信息
 void printGoodList(Node* head, enum GoodType type) {
   Node* current = head;
   while (current != NULL) {
