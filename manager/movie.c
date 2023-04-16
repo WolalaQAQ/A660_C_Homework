@@ -272,3 +272,148 @@ void printTicketList(Node* head) {
     current = current->next;
   }
 }
+
+//增加电影名排序功能
+
+// 交换两个节点的数据
+void swapmovie(Node* a, Node* b) {
+  void* temp = a->data;
+  a->data = b->data;
+  b->data = temp;
+}
+
+//// 对电影信息链表按照电影名称进行排序
+void sortMovieList(Node* head) {
+  bool swapped = true;
+  while (swapped) {
+    swapped = false;
+    Node* current = head;
+    while (current != NULL && current->next != NULL) {
+      struct Movie* current_data = (struct Movie*) current->data;
+      struct Movie* next_data = (struct Movie*) current->next->data;
+      if (strcmp(current_data->name, next_data->name) > 0) {
+        swapmovie(current, current->next);
+        swapped = true;
+      }
+      current = current->next;
+    }
+  }
+}
+
+
+
+//增加根据上映时间从前到后排序功能
+void sortByYearAdding(Node* head) {
+  int swapped;
+  Node *ptr1, *lptr = NULL;
+  struct Movie *temp;
+
+  if (head == NULL)
+    return;
+
+  do {
+    swapped = 0;
+    ptr1 = head;
+
+    while (ptr1->next != lptr) {
+      struct Movie* movie1 = (struct Movie*) ptr1->data;
+      struct Movie* movie2 = (struct Movie*) ptr1->next->data;
+
+      if (movie1->year > movie2->year) {
+        temp = movie1;
+        ptr1->data = ptr1->next->data;
+        ptr1->next->data = temp;
+        swapped = 1;
+      }
+      ptr1 = ptr1->next;
+    }
+    lptr = ptr1;
+  } while (swapped);
+}
+
+//增加根据上映时间从后到前排序功能
+void sortByYearDec(Node* head) {
+  int swapped;
+  Node *ptr1, *lptr = NULL;
+  struct Movie *temp;
+
+  if (head == NULL)
+    return;
+
+  do {
+    swapped = 0;
+    ptr1 = head;
+
+    while (ptr1->next != lptr) {
+      struct Movie* movie1 = (struct Movie*) ptr1->data;
+      struct Movie* movie2 = (struct Movie*) ptr1->next->data;
+
+      if (movie1->year < movie2->year) {
+        temp = movie1;
+        ptr1->data = ptr1->next->data;
+        ptr1->next->data = temp;
+        swapped = 1;
+      }
+      ptr1 = ptr1->next;
+    }
+    lptr = ptr1;
+  } while (swapped);
+}
+
+//按评分从高到低进行排序
+void sortByScoreDesc(Node* head) {
+  int swapped, i;
+  Node *ptr1, *lptr = NULL;
+  struct Movie *temp;
+
+  if (head == NULL)
+    return;
+
+  do {
+    swapped = 0;
+    ptr1 = head;
+
+    while (ptr1->next != lptr) {
+      struct Movie* movie1 = (struct Movie*) ptr1->data;
+      struct Movie* movie2 = (struct Movie*) ptr1->next->data;
+
+      if (movie1->score < movie2->score) {
+        temp = movie1;
+        ptr1->data = ptr1->next->data;
+        ptr1->next->data = temp;
+        swapped = 1;
+      }
+      ptr1 = ptr1->next;
+    }
+    lptr = ptr1;
+  } while (swapped);
+}
+
+//按评分从低到高进行排序
+void sortByScoreAsc(Node* head) {
+  int swapped, i;
+  Node *ptr1, *lptr = NULL;
+  struct Movie *temp;
+
+  if (head == NULL)
+    return;
+
+  do {
+    swapped = 0;
+    ptr1 = head;
+
+    while (ptr1->next != lptr) {
+      struct Movie* movie1 = (struct Movie*) ptr1->data;
+      struct Movie* movie2 = (struct Movie*) ptr1->next->data;
+
+      if (movie1->score > movie2->score) {
+        temp = movie1;
+        ptr1->data = ptr1->next->data;
+        ptr1->next->data = temp;
+        swapped = 1;
+      }
+      ptr1 = ptr1->next;
+    }
+    lptr = ptr1;
+  } while (swapped);
+}
