@@ -3,7 +3,7 @@
 //
 
 #include "movie.h"
-
+//类似于票据或凭证的唯一标识
 void generateKey(struct Ticket* ticket) {
   int i;
   for (i = 0; i < 10; i++) {
@@ -11,6 +11,7 @@ void generateKey(struct Ticket* ticket) {
   }
 }
 
+// 打开电影信息文件
 FILE* readMovieFile() {
   FILE* file = fopen("./data/movie.txt", "r");
   if (file == NULL) {
@@ -23,25 +24,29 @@ FILE* readMovieFile() {
   }
   return file;
 }
-
+ // 以追加和读取方式打开电影信息文件
 void writeMovieFile(struct Movie* movie) {
   FILE* file = fopen("./data/movie.txt", "a+");
   if (file == NULL) {
     printf("Error opening file!\n");
     exit(1);
   }
+  // 将电影信息写入文件
   fprintf(file, "%s %d %s %s %s %s %s %f\n", movie->name, movie->year,
           movie->director, movie->actor, movie->country, movie->language,
           movie->introduction, movie->score);
   fclose(file);
 }
 
+ // 以覆盖和读取方式打开电影信息文件
 void overWriteMovieFile(Node* head) {
   FILE* file = fopen("./data/movie.txt", "w");
   if (file == NULL) {
     printf("Error opening file!\n");
     exit(1);
   }
+
+  // 将所有电影信息写入文件
   Node* current = head;
   while (current != NULL) {
     struct Movie* movie = (struct Movie*) current->data;
@@ -53,6 +58,8 @@ void overWriteMovieFile(Node* head) {
   fclose(file);
 }
 
+
+//提供了一种从文件中读取电影信息的方法，并将这些信息以链表的形式进行存储，便于系统后续对电影信息的操作。
 Node* getMovieList(FILE* movie_file) {
   Node* head = NULL;
   char name[100], director[500], actor[500], country[15], language[15], introduction[1000];
@@ -73,6 +80,7 @@ Node* getMovieList(FILE* movie_file) {
   return head;
 }
 
+ // 遍历链表并打印电影信息
 void printMovieList(Node* head) {
   Node* current = head;
   while (current != NULL) {
@@ -84,6 +92,7 @@ void printMovieList(Node* head) {
   }
 }
 
+//在链表中查找特定电影节点
 int findMovieNode(Node* head, struct Movie* movie) {
   Node* current = head;
   int index = 0;
@@ -98,6 +107,7 @@ int findMovieNode(Node* head, struct Movie* movie) {
   return -1;
 }
 
+//读取电影场次信息
 FILE* readMovieTimesFile() {
   FILE* file = fopen("./data/movie_times.txt", "r");
   if (file == NULL) {
@@ -111,6 +121,7 @@ FILE* readMovieTimesFile() {
   return file;
 }
 
+//以MovieTimes结构体类型的变量写入到文件中
 void writeMovieTimesFile(struct MovieTimes* movie_times) {
   FILE* file = fopen("./data/movie_times.txt", "a+");
   if (file == NULL) {
@@ -124,6 +135,7 @@ void writeMovieTimesFile(struct MovieTimes* movie_times) {
   fclose(file);
 }
 
+//从文件中读取电影场次信息并存储在一个链表中
 Node* getMovieTimesList(FILE* movie_times_file) {
   Node* head = NULL;
   //电影场次信息临时变量
@@ -164,6 +176,7 @@ Node* getMovieTimesList(FILE* movie_times_file) {
   return head;
 }
 
+//打印一个电影场次信息的链表中每个节点的数据
 void printMovieTimesList(Node* head) {
   Node* current = head;
   while (current != NULL) {
@@ -173,6 +186,7 @@ void printMovieTimesList(Node* head) {
   }
 }
 
+//读取保存电影票信息的文本文件 
 FILE* readTicketFile() {
   FILE* file = fopen("./data/ticket.txt", "r");
   if (file == NULL) {
@@ -186,6 +200,7 @@ FILE* readTicketFile() {
   return file;
 }
 
+//将一个电影票的信息写入文件中
 void writeTicketFile(struct Ticket* ticket) {
   FILE* file = fopen("./data/ticket.txt", "a+");
   if (file == NULL) {
@@ -200,6 +215,7 @@ void writeTicketFile(struct Ticket* ticket) {
   fclose(file);
 }
 
+//读取电影票信息并将其存储在一个链表中并返回该链表的头节点指针
 Node* getTicketList(FILE* ticket_file) {
   Node* head = NULL;
   //电影票信息临时变量
@@ -244,6 +260,7 @@ Node* getTicketList(FILE* ticket_file) {
   return head;
 }
 
+//打印电影票链表
 void printTicketList(Node* head) {
   Node* current = head;
   while (current != NULL) {
