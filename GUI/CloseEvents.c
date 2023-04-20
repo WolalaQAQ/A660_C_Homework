@@ -24,14 +24,21 @@ gboolean on_window_close_show_parent_window(GtkWidget *widget, GdkEvent *event, 
 // 清空表格中的所有行
 void clearTableRows(GtkWidget *grid, int start_row) {
   // 从指定的行开始，遍历所有行和列，将每个单元格中的控件都从表格中移除
+  int num_rows = 0;
   for (int row = start_row; ; row++) {
+    if (gtk_grid_get_child_at(GTK_GRID(grid), 0, row) == NULL) {
+      num_rows = row - start_row;
+      break;
+    }
+  }
+  for (int row = start_row; row < start_row + num_rows; row++) {
     for (int col = 0; ; col++) {
       GtkWidget *widget = gtk_grid_get_child_at(GTK_GRID(grid), col, row);
       if (widget != NULL) {
         gtk_container_remove(GTK_CONTAINER(grid), widget);
       }
       else {
-        return;
+        break;
       }
     }
   }

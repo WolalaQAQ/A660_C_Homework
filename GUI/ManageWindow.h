@@ -8,10 +8,9 @@
 #include <gtk/gtk.h>
 
 #include "CloseEvents.h"
-
-#include "MovieManageWindow.h"
-#include "UserManageWindow.h"
-#include "GoodManageWindow.h"
+#include "GoodManage/GoodManageWindow.h"
+#include "MovieManage/MovieManageWindow.h"
+#include "UserManage/UserManageWindow.h"
 
 void MainManageWindow(GtkWidget *button, gpointer data);
 
