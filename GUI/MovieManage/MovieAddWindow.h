@@ -12,7 +12,7 @@
 #include "MovieManageWindow.h"
 
 void AddMovieWindow(GtkWidget *button, gpointer data);
-void on_menu_item_clicked_add_movie(GtkMenuItem *menu_item, gpointer user_data);
+
 void on_add_movie_ok_button_clicked(GtkWidget* button, gpointer data);
 
 #endif  // A660_C_HOMEWORK_MOVIEADDWINDOW_H
