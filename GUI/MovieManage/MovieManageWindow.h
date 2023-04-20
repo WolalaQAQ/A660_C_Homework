@@ -22,6 +22,9 @@ void MovieManageWindow(GtkWidget *button, gpointer data);
 void MovieTimesManageWindow(GtkWidget *button, gpointer data);
 void TicketManageWindow(GtkWidget *button, gpointer data);
 
+void refreshMovieTable(GtkWidget *button, gpointer data);
+void on_sort_year_button_clicked(GtkWidget *button, gpointer data);
+
 void on_menu_item_clicked_add_movie(GtkMenuItem *menu_item, gpointer user_data);
 void on_menu_item_clicked_delete_movie(GtkMenuItem *menu_item, gpointer user_data);
 void on_menu_item_clicked_edit_movie(GtkMenuItem *menu_item, gpointer user_data);

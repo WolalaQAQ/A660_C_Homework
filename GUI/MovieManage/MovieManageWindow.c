@@ -90,20 +90,13 @@ void MovieManageWindow(GtkWidget *button, gpointer data) {
   // 将菜单项添加到菜单按钮的菜单中
   g_signal_connect(add_movie, "activate",
                    G_CALLBACK(on_menu_item_clicked_add_movie), window);
-  MovieData *movie_data = g_new(MovieData, 1);
-  movie_data->window = window;
-  movie_data->movie_node = current_movie_node;
-  g_signal_connect(del_movie, "activate",
-                   G_CALLBACK(on_menu_item_clicked_delete_movie), movie_data);
-  g_signal_connect(search_movie, "activate",
-                   G_CALLBACK(on_menu_item_clicked_search_movie), movie_data);
-  g_signal_connect(edit_movie, "activate",
-                   G_CALLBACK(on_menu_item_clicked_edit_movie), movie_data);
   GtkWidget *sort_year_button = gtk_button_new_with_label("上映年份");
+  GtkWidget *sort_arrow_up = gtk_image_new_from_icon_name("pan-up-symbolic", GTK_ICON_SIZE_BUTTON);
+  GtkWidget *sort_arrow_down = gtk_image_new_from_icon_name("pan-down-symbolic", GTK_ICON_SIZE_BUTTON);
   // 添加表头
   gtk_grid_attach(GTK_GRID(grid), menu_button, 0, 0, 1, 1);
   gtk_grid_attach(GTK_GRID(grid), gtk_label_new("片名"), 0, 1, 1, 1);
-  gtk_grid_attach(GTK_GRID(grid), gtk_label_new("上映年份"), 1, 1, 1, 1);
+  gtk_grid_attach(GTK_GRID(grid), sort_year_button, 1, 1, 1, 1);
   gtk_grid_attach(GTK_GRID(grid), gtk_label_new("导演"), 2, 1, 1, 1);
   gtk_grid_attach(GTK_GRID(grid), gtk_label_new("主演"), 3, 1, 1, 1);
   gtk_grid_attach(GTK_GRID(grid), gtk_label_new("国家"), 4, 1, 1, 1);
@@ -182,6 +175,24 @@ void MovieManageWindow(GtkWidget *button, gpointer data) {
                                  GTK_POLICY_AUTOMATIC, GTK_POLICY_ALWAYS);
   gtk_container_add(GTK_CONTAINER(scroll_window), grid);
   gtk_container_add(GTK_CONTAINER(window), scroll_window);
+  MovieData *movie_data = g_new(MovieData, 1);
+  movie_data->window = window;
+  movie_data->movie_node = current_movie_node;
+  movie_data->grid = grid;
+  SortData *sort_data = g_new(SortData, 1);
+  sort_data->head = current_movie_node;
+  sort_data->grid = grid;
+  sort_data->window = window;
+  sort_data->sort_by_asc = TRUE;
+  sort_data->list_length = length;
+  g_signal_connect(del_movie, "activate",
+                   G_CALLBACK(on_menu_item_clicked_delete_movie), movie_data);
+  g_signal_connect(search_movie, "activate",
+                   G_CALLBACK(on_menu_item_clicked_search_movie), movie_data);
+  g_signal_connect(edit_movie, "activate",
+                   G_CALLBACK(on_menu_item_clicked_edit_movie), movie_data);
+  g_signal_connect(sort_year_button, "clicked",
+                   G_CALLBACK(on_sort_year_button_clicked), sort_data);
   // 释放链表和文件资源
   freeList(current_movie_node);
   // 显示窗口和所有控件
@@ -191,6 +202,100 @@ void MovieManageWindow(GtkWidget *button, gpointer data) {
 void MovieTimesManageWindow(GtkWidget *button, gpointer data) {}
 
 void TicketManageWindow(GtkWidget *button, gpointer data) {}
+
+void refreshMovieTable(GtkWidget *button, gpointer data) {
+  SortData *current_data = data;
+  GtkWidget *current_window = current_data->window;
+  Node *current_movie_list = current_data->head;
+  GtkWidget *current_grid = current_data->grid;
+  int length = current_data->list_length;
+  // 删除表格中的所有控件
+  clearTableRows(current_grid, 2);
+  // 判断链表是否为空
+  if (length == 0) {
+    // 链表为空，创建空表格并将其添加到窗口中
+    GtkWidget *empty_label = gtk_label_new("没有电影信息");
+    GtkWidget *empty_frame = gtk_frame_new(NULL);
+    gtk_container_add(GTK_CONTAINER(empty_frame), empty_label);
+    gtk_grid_attach(GTK_GRID(current_grid), empty_frame, 0, 2, 8, 1);
+  } else {
+    // 链表不为空，继续执行代码
+    int row = 2;
+    // 循环遍历电影信息链表
+    while (current_movie_list != NULL) {
+      struct Movie *current_movie = current_movie_list->data;
+      // 创建框架和标签，用于显示电影信息
+      GtkWidget *name_frame = gtk_frame_new(NULL);
+      GtkWidget *year_frame = gtk_frame_new(NULL);
+      GtkWidget *director_frame = gtk_frame_new(NULL);
+      GtkWidget *actor_frame = gtk_frame_new(NULL);
+      GtkWidget *country_frame = gtk_frame_new(NULL);
+      GtkWidget *language_frame = gtk_frame_new(NULL);
+      GtkWidget *introduction_frame = gtk_frame_new(NULL);
+      GtkWidget *score_frame = gtk_frame_new(NULL);
+
+      GtkWidget *name = gtk_label_new(current_movie->name);
+      GtkWidget *year =
+          gtk_label_new(g_strdup_printf("%d", current_movie->year));
+      GtkWidget *director = gtk_label_new(current_movie->director);
+      GtkWidget *actor = gtk_label_new(current_movie->actor);
+      GtkWidget *country = gtk_label_new(current_movie->country);
+      GtkWidget *language = gtk_label_new(current_movie->language);
+      GtkWidget *introduction = gtk_label_new(current_movie->introduction);
+      GtkWidget *score =
+          gtk_label_new(g_strdup_printf("%.1f", current_movie->score));
+      // 将标签添加到框架中
+      gtk_container_add(GTK_CONTAINER(name_frame), name);
+      gtk_container_add(GTK_CONTAINER(year_frame), year);
+      gtk_container_add(GTK_CONTAINER(director_frame), director);
+      gtk_container_add(GTK_CONTAINER(actor_frame), actor);
+      gtk_container_add(GTK_CONTAINER(country_frame), country);
+      gtk_container_add(GTK_CONTAINER(language_frame), language);
+      gtk_container_add(GTK_CONTAINER(introduction_frame), introduction);
+      gtk_container_add(GTK_CONTAINER(score_frame), score);
+      // 设置框架的大小和位置
+      gtk_widget_set_size_request(name_frame, 100, 30);
+      gtk_widget_set_size_request(year_frame, 50, 30);
+      gtk_widget_set_size_request(director_frame, 150, 30);
+      gtk_widget_set_size_request(actor_frame, 150, 30);
+      gtk_widget_set_size_request(country_frame, 80, 30);
+      gtk_widget_set_size_request(language_frame, 80, 30);
+      gtk_widget_set_size_request(introduction_frame, 200, 30);
+      gtk_widget_set_size_request(score_frame, 50, 30);
+      // 将框架添加到表格中
+      gtk_grid_attach(GTK_GRID(current_grid), name_frame, 0, row, 1, 1);
+      gtk_grid_attach(GTK_GRID(current_grid), year_frame, 1, row, 1, 1);
+      gtk_grid_attach(GTK_GRID(current_grid), director_frame, 2, row, 1, 1);
+      gtk_grid_attach(GTK_GRID(current_grid), actor_frame, 3, row, 1, 1);
+      gtk_grid_attach(GTK_GRID(current_grid), country_frame, 4, row, 1, 1);
+      gtk_grid_attach(GTK_GRID(current_grid), language_frame, 5, row, 1, 1);
+      gtk_grid_attach(GTK_GRID(current_grid), introduction_frame, 6, row, 1, 1);
+      gtk_grid_attach(GTK_GRID(current_grid), score_frame, 7, row, 1, 1);
+      // 将行号加 1
+      row++;
+      // 移动到下一个节点
+      current_movie_list = current_movie_list->next;
+    }
+  }
+  // 创建一个可滚动的窗口，将表格添加到其中
+  GtkWidget *scroll_window = gtk_scrolled_window_new(NULL, NULL);
+  gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll_window),
+                                 GTK_POLICY_AUTOMATIC, GTK_POLICY_ALWAYS);
+  gtk_container_add(GTK_CONTAINER(scroll_window), current_grid);
+  gtk_container_add(GTK_CONTAINER(current_window), scroll_window);
+  // 释放链表和文件资源
+  freeList(current_movie_list);
+  gtk_widget_show_all(current_window);
+}
+
+void on_sort_year_button_clicked(GtkWidget *button, gpointer data) {
+  SortData *current_sort_data = data;
+  GtkWidget *current_window = current_sort_data->window;
+  Node *current_movie_list = current_sort_data->head;
+  GtkWidget *current_grid = current_sort_data->grid;
+  gboolean is_sort_by_asc = current_sort_data->sort_by_asc;
+  refreshMovieTable(NULL, current_grid);
+}
 
 void on_menu_item_clicked_add_movie(GtkMenuItem *menu_item,
                                     gpointer user_data) {

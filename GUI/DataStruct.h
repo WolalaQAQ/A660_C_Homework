@@ -24,6 +24,7 @@ typedef struct {
 
 typedef struct {
   GtkWidget *window;
+  GtkWidget *grid;
   Node *movie_node;
 } MovieData;
 
@@ -32,4 +33,12 @@ typedef struct {
   GtkWidget *grid;
   Node* head;
 } SearchData;
+
+typedef struct {
+  GtkWidget *window;
+  GtkWidget *grid;
+  gboolean sort_by_asc;
+  int list_length;
+  Node *head;
+} SortData;
 #endif  // A660_C_HOMEWORK_DATASTRUCT_H
