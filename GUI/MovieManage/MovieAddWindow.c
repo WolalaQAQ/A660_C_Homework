@@ -93,9 +93,3 @@ void on_add_movie_ok_button_clicked(GtkWidget *button, gpointer data) {
   gtk_widget_destroy(window);
   MovieManageWindow(NULL, NULL);
 }
-
-void on_menu_item_clicked_add_movie(GtkMenuItem *menu_item,
-                                    gpointer user_data) {
-  gtk_widget_destroy(user_data);
-  AddMovieWindow(NULL, NULL);
-}
