@@ -99,6 +99,7 @@ void MovieManageWindow(GtkWidget *button, gpointer data) {
                    G_CALLBACK(on_menu_item_clicked_search_movie), movie_data);
   g_signal_connect(edit_movie, "activate",
                    G_CALLBACK(on_menu_item_clicked_edit_movie), movie_data);
+  GtkWidget *sort_year_button = gtk_button_new_with_label("上映年份");
   // 添加表头
   gtk_grid_attach(GTK_GRID(grid), menu_button, 0, 0, 1, 1);
   gtk_grid_attach(GTK_GRID(grid), gtk_label_new("片名"), 0, 1, 1, 1);

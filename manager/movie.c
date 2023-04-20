@@ -45,7 +45,6 @@ void overWriteMovieFile(Node* head) {
     printf("Error opening file!\n");
     exit(1);
   }
-
   // 将所有电影信息写入文件
   Node* current = head;
   while (current != NULL) {
@@ -107,6 +106,48 @@ int findMovieNode(Node* head, struct Movie* movie) {
   return -1;
 }
 
+float compareMovieNode(struct Movie* movie1, struct Movie* movie2, enum MovieSortType sort_type) {
+  switch(sort_type) {
+        case MOVIE_SORT_BY_YEAR_ASC:
+          return movie1->year - movie2->year;
+          break;
+        case MOVIE_SORT_BY_YEAR_DESC:
+          return movie2->year - movie1->year;
+          break;
+        case MOVIE_SORT_BY_SCORE_ASC:
+          return movie1->score - movie2->score;
+          break;
+        case MOVIE_SORT_BY_SCORE_DESC:
+          return movie2->score - movie1->score;
+          break;
+        default:
+          return 0;
+  }
+}
+
+void sortMovieList(Node** head, enum MovieSortType sort_type) {
+  Node* current = *head;
+  Node* index = NULL;
+  struct Movie* temp;
+  if (*head == NULL) {
+        return;
+  } else {
+        while (current != NULL) {
+          index = current->next;
+          while (index != NULL) {
+            if (compareMovieNode((struct Movie*)current->data,
+                                 (struct Movie*)index->data, sort_type) > 0) {
+              temp = (struct Movie*)current->data;
+              current->data = index->data;
+              index->data = temp;
+            }
+            index = index->next;
+          }
+          current = current->next;
+        }
+  }
+}
+
 //读取电影场次信息
 FILE* readMovieTimesFile() {
   FILE* file = fopen("./data/movie_times.txt", "r");
@@ -142,7 +183,6 @@ Node* getMovieTimesList(FILE* movie_times_file) {
   char time[30], cinema[30];
   float price;
   int seat_remain;
-
   //电影信息临时变量
   char name[20];
   int year;
@@ -152,7 +192,6 @@ Node* getMovieTimesList(FILE* movie_times_file) {
   char language[15];
   char introduction[1000];
   float score;
-
   while (fscanf(movie_times_file, "%s %s %f %d %s %d %s %s %s %s %s %f", time, cinema, &price, &seat_remain,
                 name, &year, director, actor,
                 country, language, introduction, &score) == 12) {
@@ -273,147 +312,4 @@ void printTicketList(Node* head) {
   }
 }
 
-//增加电影名排序功能
 
-// 交换两个节点的数据
-void swapmovie(Node* a, Node* b) {
-  void* temp = a->data;
-  a->data = b->data;
-  b->data = temp;
-}
-
-//// 对电影信息链表按照电影名称进行排序
-void sortMovieList(Node* head) {
-  bool swapped = true;
-  while (swapped) {
-    swapped = false;
-    Node* current = head;
-    while (current != NULL && current->next != NULL) {
-      struct Movie* current_data = (struct Movie*) current->data;
-      struct Movie* next_data = (struct Movie*) current->next->data;
-      if (strcmp(current_data->name, next_data->name) > 0) {
-        swapmovie(current, current->next);
-        swapped = true;
-      }
-      current = current->next;
-    }
-  }
-}
-
-
-
-//增加根据上映时间从前到后排序功能
-void sortByYearAdding(Node* head) {
-  int swapped;
-  Node *ptr1, *lptr = NULL;
-  struct Movie *temp;
-
-  if (head == NULL)
-    return;
-
-  do {
-    swapped = 0;
-    ptr1 = head;
-
-    while (ptr1->next != lptr) {
-      struct Movie* movie1 = (struct Movie*) ptr1->data;
-      struct Movie* movie2 = (struct Movie*) ptr1->next->data;
-
-      if (movie1->year > movie2->year) {
-        temp = movie1;
-        ptr1->data = ptr1->next->data;
-        ptr1->next->data = temp;
-        swapped = 1;
-      }
-      ptr1 = ptr1->next;
-    }
-    lptr = ptr1;
-  } while (swapped);
-}
-
-//增加根据上映时间从后到前排序功能
-void sortByYearDec(Node* head) {
-  int swapped;
-  Node *ptr1, *lptr = NULL;
-  struct Movie *temp;
-
-  if (head == NULL)
-    return;
-
-  do {
-    swapped = 0;
-    ptr1 = head;
-
-    while (ptr1->next != lptr) {
-      struct Movie* movie1 = (struct Movie*) ptr1->data;
-      struct Movie* movie2 = (struct Movie*) ptr1->next->data;
-
-      if (movie1->year < movie2->year) {
-        temp = movie1;
-        ptr1->data = ptr1->next->data;
-        ptr1->next->data = temp;
-        swapped = 1;
-      }
-      ptr1 = ptr1->next;
-    }
-    lptr = ptr1;
-  } while (swapped);
-}
-
-//按评分从高到低进行排序
-void sortByScoreDesc(Node* head) {
-  int swapped, i;
-  Node *ptr1, *lptr = NULL;
-  struct Movie *temp;
-
-  if (head == NULL)
-    return;
-
-  do {
-    swapped = 0;
-    ptr1 = head;
-
-    while (ptr1->next != lptr) {
-      struct Movie* movie1 = (struct Movie*) ptr1->data;
-      struct Movie* movie2 = (struct Movie*) ptr1->next->data;
-
-      if (movie1->score < movie2->score) {
-        temp = movie1;
-        ptr1->data = ptr1->next->data;
-        ptr1->next->data = temp;
-        swapped = 1;
-      }
-      ptr1 = ptr1->next;
-    }
-    lptr = ptr1;
-  } while (swapped);
-}
-
-//按评分从低到高进行排序
-void sortByScoreAsc(Node* head) {
-  int swapped, i;
-  Node *ptr1, *lptr = NULL;
-  struct Movie *temp;
-
-  if (head == NULL)
-    return;
-
-  do {
-    swapped = 0;
-    ptr1 = head;
-
-    while (ptr1->next != lptr) {
-      struct Movie* movie1 = (struct Movie*) ptr1->data;
-      struct Movie* movie2 = (struct Movie*) ptr1->next->data;
-
-      if (movie1->score > movie2->score) {
-        temp = movie1;
-        ptr1->data = ptr1->next->data;
-        ptr1->next->data = temp;
-        swapped = 1;
-      }
-      ptr1 = ptr1->next;
-    }
-    lptr = ptr1;
-  } while (swapped);
-}
