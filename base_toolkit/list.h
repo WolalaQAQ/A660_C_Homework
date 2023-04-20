@@ -21,6 +21,7 @@ void insertAtIndex(Node** headRef, int index, void* data);
 void deleteNode(Node** headRef, void* data);
 void deleteNodeByIndex(Node** headRef, int index);
 int getListLength(Node* head);
+void swapNode(Node* node1, Node* node2);
 void freeList(Node* head);
 
 #endif  // A660_C_HOMEWORK_LIST_H

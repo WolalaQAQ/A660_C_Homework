@@ -133,6 +133,13 @@ int getListLength(Node* head) {
   return len;
 }
 
+// 交换两个节点的值
+void swapNode(Node* node1, Node* node2) {
+  void* temp = node1->data;
+  node1->data = node2->data;
+  node2->data = temp;
+}
+
 // 释放链表中所有节点的内存
 void freeList(Node* head) {
   Node* currNode = head;

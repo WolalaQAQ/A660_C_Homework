@@ -36,6 +36,13 @@ struct Ticket {
   char key[10];
 };
 
+enum MovieSortType {
+  MOVIE_SORT_BY_YEAR_ASC,
+  MOVIE_SORT_BY_YEAR_DESC,
+  MOVIE_SORT_BY_SCORE_ASC,
+  MOVIE_SORT_BY_SCORE_DESC
+};
+
 void generateKey(struct Ticket* ticket);
 
 FILE* readMovieFile();
@@ -44,6 +51,8 @@ void overWriteMovieFile(Node* head);
 Node* getMovieList(FILE* movie_file);
 void printMovieList(Node* head);
 int findMovieNode(Node* head, struct Movie* movie);
+float compareMovieNode(struct Movie* movie1, struct Movie* movie2, enum MovieSortType sort_type);
+void sortMovieList(Node** head, enum MovieSortType sort_type);
 
 FILE* readMovieTimesFile();
 void writeMovieTimesFile(struct MovieTimes* movie_times);
