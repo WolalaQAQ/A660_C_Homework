@@ -52,6 +52,18 @@ include_directories(${PROJECT_SOURCE_DIR}/GUI)
 add_subdirectory(GUI)
 aux_source_directory(./GUI GUI_SRCS)
 
+include_directories(${PROJECT_SOURCE_DIR}/GUI/GoodManage)
+add_subdirectory(${PROJECT_SOURCE_DIR}/GUI/GoodManage)
+aux_source_directory(${PROJECT_SOURCE_DIR}/GUI/GoodManage GUI_SRCS)
+
+include_directories(${PROJECT_SOURCE_DIR}/GUI/MovieManage)
+add_subdirectory(${PROJECT_SOURCE_DIR}/GUI/MovieManage)
+aux_source_directory(${PROJECT_SOURCE_DIR}/GUI/MovieManage GUI_SRCS)
+
+include_directories(${PROJECT_SOURCE_DIR}/GUI/UserManage)
+add_subdirectory(${PROJECT_SOURCE_DIR}/GUI/UserManage)
+aux_source_directory(${PROJECT_SOURCE_DIR}/GUI/UserManage GUI_SRCS)
+
 set_source_files_properties(
         # ${ML_SRCS}
         PROPERTIES LANGUAGE CXX
