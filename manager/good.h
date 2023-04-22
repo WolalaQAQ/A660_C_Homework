@@ -23,10 +23,18 @@ struct Good {
   char description[200];
   float price;
 };
+enum GoodSortType {
+  GOOD_SORT_BY_name,
+  Good_SORT_BY_price_ASC,
+  Good_SORT_BY_price_DESC
+};
 
 FILE* readGoodFile();
 void writeGoodFile(struct Good* good);
 Node* getGoodList(FILE* good_file);
 void printGoodList(Node* head, enum GoodType type);
-
+void overWriteGoodFile(Node* head);
+int findGoodNode(Node* head, struct Good* good);
+FILE* readGoodTimesFile();
+int deleteGoodFile(int id);
 #endif  // A660_C_HOMEWORK_GOOD_H
