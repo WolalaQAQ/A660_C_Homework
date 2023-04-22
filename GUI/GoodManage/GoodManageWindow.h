@@ -1,7 +1,3 @@
-//
-// Created by wolala on 23-4-13.
-//
-
 #ifndef A660_C_HOMEWORK_MAIN_GOOD_MANAGE_WINDOW_H
 #define A660_C_HOMEWORK_MAIN_GOOD_MANAGE_WINDOW_H
 
