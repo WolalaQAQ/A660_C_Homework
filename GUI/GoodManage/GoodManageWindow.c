@@ -1,6 +1,3 @@
-//
-// Created by wolala on 23-4-13.
-//
 #include "GoodManageWindow.h"
 
 void MainGoodManageWindow(GtkWidget *button, gpointer data) {
